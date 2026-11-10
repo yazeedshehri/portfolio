@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PharmaStock Intelligence · Sudair Pharma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F6FB;--surface:#FFFFFF;--surface-2:#F7F9FC;--surface-3:#EEF2F8;--border:#E2E8F1;--border-2:#D3DCE8;
+  --text:#0B1B33;--muted:#5A6A82;--faint:#94A3B8;
+  --brand:#0FB5AE;--brand-strong:#0A938D;--brand-2:#2F6BFF;--violet:#7C5CFF;
+  --ok:#12B76A;--warn:#F59E0B;--danger:#F04438;--info:#2F6BFF;
+  --ok-bg:rgba(18,183,106,.12);--warn-bg:rgba(245,158,11,.14);--danger-bg:rgba(240,68,56,.11);--info-bg:rgba(47,107,255,.11);--violet-bg:rgba(124,92,255,.12);--brand-bg:rgba(15,181,174,.12);--muted-bg:rgba(100,116,139,.12);
+  --sidebar:#081529;--sidebar-2:#0E2140;--side-text:#9FB0C8;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 6px 20px rgba(16,24,40,.06);
+  --shadow-lg:0 20px 50px rgba(8,21,41,.18);
+  --grad:linear-gradient(135deg,#0FB5AE 0%,#2F6BFF 100%);
+  --radius:16px;
+}
+[data-theme=dark]{
+  --bg:#06101F;--surface:#0C1A2E;--surface-2:#10223A;--surface-3:#152a46;--border:#1C3150;--border-2:#26406a;
+  --text:#E7EEF8;--muted:#9AABC4;--faint:#5E7392;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  --sidebar:#050D1A;--sidebar-2:#0B1A30;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter','IBM Plex Sans Arabic',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden;font-size:14px;line-height:1.5}
+html[lang=ar] body{font-family:'IBM Plex Sans Arabic','Inter',Tahoma,sans-serif}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.ic{width:18px;height:18px;flex:none}
+[dir=rtl] .flip{transform:scaleX(-1)}
+.num,.tnum{font-variant-numeric:tabular-nums}
+.code{font-family:'Inter',ui-monospace,monospace;font-size:12.5px;color:var(--muted);unicode-bidi:isolate;direction:ltr;display:inline-block;letter-spacing:.01em}
+bdi{unicode-bidi:isolate}
+
+/* ---------- TOP BAR ---------- */
+.topbar{position:fixed;inset:0 0 auto 0;height:64px;z-index:50;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border)}
+body.deck .topbar{background:rgba(5,13,28,.72);border-color:rgba(255,255,255,.07);color:#fff;backdrop-filter:blur(14px)}
+.logo{display:flex;align-items:center;gap:11px;min-width:0}
+.logo-mark{width:38px;height:38px;border-radius:11px;background:var(--grad);display:grid;place-items:center;box-shadow:0 6px 18px rgba(15,181,174,.35);flex:none}
+.logo-mark svg{width:22px;height:22px}
+.logo-name{font-weight:800;font-size:16px;letter-spacing:-.01em;line-height:1.1;font-family:'Inter',sans-serif;white-space:nowrap}
+.logo-name span{font-weight:400;opacity:.75}
+.logo-sub{font-size:11.5px;color:var(--muted);font-weight:500;white-space:nowrap}
+body.deck .logo-sub{color:#8FA3C0}
+.top-mid{display:flex;justify-content:center;align-items:center;gap:14px;min-width:0}
+.seg{display:inline-flex;background:var(--surface-3);border:1px solid var(--border);border-radius:12px;padding:3px;gap:2px}
+body.deck .seg{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
+.seg button{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:9px;font-weight:600;font-size:13px;color:var(--muted);white-space:nowrap;transition:.2s}
+body.deck .seg button{color:#A9B8CF}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(16,24,40,.12)}
+body.deck .seg button.on{background:rgba(255,255,255,.14);color:#fff}
+.top-r{display:flex;align-items:center;gap:8px}
+.lang{display:inline-flex;border-radius:999px;padding:3px;background:var(--grad);box-shadow:0 4px 14px rgba(47,107,255,.25)}
+.lang button{padding:6px 13px;border-radius:999px;color:rgba(255,255,255,.85);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
+.lang button.on{background:#fff;color:#0B1B33}
+.lang .ar{font-family:'IBM Plex Sans Arabic',sans-serif}
+.ibtn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--muted);border:1px solid var(--border);background:var(--surface);position:relative;transition:.2s}
+.ibtn:hover{color:var(--text);border-color:var(--border-2)}
+body.deck .ibtn{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.09);color:#C5D2E6}
+.ibtn .dot{position:absolute;top:-5px;inset-inline-end:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;padding:0 4px;border:2px solid var(--surface)}
+.gsearch{position:relative;width:min(380px,30vw)}
+.gsearch input{width:100%;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);padding-inline:38px 12px;outline:none;font-size:13px}
+.gsearch input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-bg)}
+.gsearch .ic{position:absolute;inset-inline-start:12px;top:10px;color:var(--faint)}
+.dd{position:absolute;top:calc(100% + 8px);inset-inline-start:0;min-width:100%;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;z-index:60;display:none}
+.dd.open{display:block}
+.dd-item{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:9px;cursor:pointer;width:100%;text-align:start}
+.dd-item:hover{background:var(--surface-2)}
+.bell-dd{inset-inline-start:auto;inset-inline-end:0;width:380px}
+.user{display:flex;align-items:center;gap:10px;padding-inline-start:8px;border-inline-start:1px solid var(--border);margin-inline-start:4px}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7C5CFF,#2F6BFF);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.user b{font-size:13px;display:block;line-height:1.2}.user small{font-size:11.5px;color:var(--muted)}
+.period{height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);padding-inline:12px 30px;font-weight:600;font-size:13px;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+[dir=rtl] .period{background-position:left 10px center;padding-inline:12px 30px}
+.period-wrap{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+
+/* ---------- APP SHELL ---------- */
+#app{position:fixed;inset:64px 0 0 0;display:grid;grid-template-columns:268px 1fr}
+body.deck #app{display:none}
+#sidebar{background:linear-gradient(180deg,var(--sidebar),var(--sidebar-2));color:var(--side-text);overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:4px}
+.nav-g{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#5D7193;padding:14px 12px 6px}
+html[lang=ar] .nav-g{letter-spacing:0;font-size:11.5px}
+.nav-i{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-weight:500;font-size:13.5px;color:var(--side-text);width:100%;text-align:start;transition:.15s;position:relative}
+.nav-i:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-i.on{background:linear-gradient(90deg,rgba(15,181,174,.22),rgba(47,107,255,.10));color:#fff}
+[dir=rtl] .nav-i.on{background:linear-gradient(-90deg,rgba(15,181,174,.22),rgba(47,107,255,.10))}
+.nav-i.on::before{content:"";position:absolute;inset-inline-start:-14px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--brand)}
+.nav-i .cnt{margin-inline-start:auto;background:var(--danger);color:#fff;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:9px}
+.nav-i .soon{margin-inline-start:auto;font-size:10px;border:1px solid rgba(255,255,255,.18);padding:0 7px;border-radius:9px;color:#8FA3C0}
+.src{margin-top:auto;padding:14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:12px}
+.src b{color:#E2EAF5;font-size:12.5px;display:flex;align-items:center;gap:8px}
+.live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(18,183,106,.6);animation:pulse 2s infinite;flex:none}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(18,183,106,0)}100%{box-shadow:0 0 0 0 rgba(18,183,106,0)}}
+.back{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);color:#C9D6E8;font-weight:600;font-size:13px;width:100%}
+.back:hover{background:rgba(255,255,255,.06)}
+#content{overflow-y:auto;padding:26px 30px 60px;scroll-behavior:smooth}
+.page{max-width:1560px;margin:0 auto;animation:fadeUp .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+.crumb{font-size:12px;color:var(--faint);font-weight:500;display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.ph h1{font-size:26px;font-weight:700;letter-spacing:-.02em}
+html[lang=ar] .ph h1{letter-spacing:0}
+.ph p{color:var(--muted);margin-top:4px}
+.ph-act{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge-src{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);font-size:12.5px;color:var(--muted)}
+.badge-src b{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;border-radius:10px;font-weight:600;font-size:13px;border:1px solid var(--border);background:var(--surface);transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--border-2);background:var(--surface-2)}
+.btn.pri{background:var(--grad);color:#fff;border:0;box-shadow:0 6px 16px rgba(47,107,255,.25)}
+.btn.pri:hover{filter:brightness(1.06)}
+.btn.sm{height:30px;padding:0 11px;font-size:12px;border-radius:8px}
+.grid{display:grid;gap:18px;margin-bottom:18px}
+.g-kpi{grid-template-columns:repeat(6,minmax(0,1fr))}
+.g-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g-21{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.g-12{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);min-width:0}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+.ch h3{font-size:15px;font-weight:700}
+.ch p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.kpi{position:relative;overflow:hidden;padding:18px}
+.kpi-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.kpi-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center}
+.kpi-l{font-size:12.5px;color:var(--muted);font-weight:500;line-height:1.3}
+.kpi-v{font-size:25px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+html[lang=ar] .kpi-v{letter-spacing:0;font-size:23px}
+.kpi-f{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.kpi .spark{position:absolute;inset-inline-end:14px;top:18px;width:84px;height:30px;opacity:.9}
+.delta{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11.5px;padding:2px 7px;border-radius:6px}
+.delta.good{color:var(--ok);background:var(--ok-bg)}.delta.bad{color:var(--danger);background:var(--danger-bg)}
+.t-brand{color:var(--brand);background:var(--brand-bg)}.t-blue{color:var(--brand-2);background:var(--info-bg)}.t-warn{color:var(--warn);background:var(--warn-bg)}.t-danger{color:var(--danger);background:var(--danger-bg)}.t-violet{color:var(--violet);background:var(--violet-bg)}.t-ok{color:var(--ok);background:var(--ok-bg)}.t-muted{color:var(--muted);background:var(--muted-bg)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.nodot::before{display:none}
+/* tables */
+.tw{overflow-x:auto;margin:0 -20px -20px;border-top:1px solid var(--border)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font-size:11.5px;font-weight:600;color:var(--muted);text-align:start;padding:11px 14px;background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap;user-select:none}
+.tbl th.s{cursor:pointer}.tbl th.s:hover{color:var(--text)}
+.tbl th .ar{opacity:.5;font-size:10px}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr.cl{cursor:pointer;transition:background .12s}
+.tbl tbody tr.cl:hover td{background:var(--surface-2)}
+.tbl .num{text-align:end;white-space:nowrap}
+.tbl .nm{font-weight:600;color:var(--text)}
+.tbl .sub{font-size:11.5px;color:var(--muted)}
+.mbar{height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;min-width:70px}
+.mbar i{display:block;height:100%;border-radius:4px}
+/* filters */
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.inp{height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);padding:0 12px;outline:none;font-size:13px;min-width:0}
+.inp:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-bg)}
+.inp-s{position:relative;flex:1 1 260px}
+.inp-s input{width:100%;padding-inline-start:36px}
+.inp-s .ic{position:absolute;top:10px;inset-inline-start:11px;color:var(--faint)}
+select.inp{appearance:none;padding-inline-end:30px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+[dir=rtl] select.inp{background-position:left 10px center}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:6px 13px;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-size:12.5px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.chip.on{background:var(--text);color:var(--surface);border-color:var(--text)}
+.chip .n{font-size:11px;opacity:.7}
+.pager{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border)}
+/* charts */
+.lc{width:100%;height:auto;display:block;overflow:visible}
+.lc .gl{stroke:var(--border);stroke-width:1}
+.lc .ax{fill:var(--faint);font-size:11px;font-family:inherit}
+.lc .hz{fill:transparent;cursor:crosshair}
+.lc .hd{opacity:0;pointer-events:none;transition:opacity .12s}
+.lc .hz:hover+.hd{opacity:1}
+.lc .vl{stroke:var(--border-2);stroke-dasharray:3 3}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.hb{display:flex;flex-direction:column;gap:11px}
+.hb-row{display:grid;grid-template-columns:minmax(0,42%) 1fr auto;align-items:center;gap:12px;font-size:12.5px;cursor:default}
+.hb-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);font-weight:500}
+.hb-t{height:9px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.hb-f{height:100%;border-radius:6px;transform-origin:left;animation:grow .9s cubic-bezier(.2,.7,.2,1)}
+[dir=rtl] .hb-f{transform-origin:right}
+@keyframes grow{from{transform:scaleX(0)}}
+.hb-v{font-weight:700;font-size:12.5px;min-width:64px;text-align:end;font-variant-numeric:tabular-nums}
+.vb{display:flex;align-items:flex-end;gap:14px;height:210px;padding-top:24px;border-bottom:1px solid var(--border);position:relative}
+.vb-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px;min-width:0}
+.vb-b{width:min(64px,80%);border-radius:8px 8px 3px 3px;transform-origin:bottom;animation:growY .9s cubic-bezier(.2,.7,.2,1);position:relative;min-height:3px}
+@keyframes growY{from{transform:scaleY(0)}}
+.vb-v{font-size:12px;font-weight:700;white-space:nowrap}
+.vb-x{display:flex;gap:14px;margin-top:8px}
+.vb-x div{flex:1;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.3}
+.vb-x small{display:block;color:var(--faint);font-size:11px}
+.band{position:absolute;left:0;right:0;background:var(--ok-bg);border-top:1px dashed var(--ok);border-bottom:1px dashed var(--ok);pointer-events:none}
+.donut-w{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.donut-w svg circle{transition:stroke-width .2s}
+.donut-w svg circle:hover{stroke-width:28}
+.dl{display:flex;flex-direction:column;gap:10px;flex:1;min-width:150px}
+.dl div{display:flex;align-items:center;gap:9px;font-size:12.5px}
+.dl i{width:10px;height:10px;border-radius:3px}
+.dl b{margin-inline-start:auto;font-variant-numeric:tabular-nums}
+.heat{display:grid;gap:4px;font-size:11px}
+.heat .hl{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline-end:8px;display:flex;align-items:center;font-size:12px}
+.heat .hc{height:30px;border-radius:6px;background:var(--surface-3);transition:transform .12s;cursor:default}
+.heat .hc:hover{transform:scale(1.1);outline:2px solid var(--text)}
+.heat .hh{text-align:center;color:var(--faint);font-size:11px;padding-bottom:4px}
+.scale{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);margin-top:14px}
+.scale i{height:8px;width:140px;border-radius:4px;background:linear-gradient(90deg,var(--surface-3),#F7C873,#F59E0B,#F04438)}
+[dir=rtl] .scale i{background:linear-gradient(-90deg,var(--surface-3),#F7C873,#F59E0B,#F04438)}
+/* insights / lists */
+.ins{display:flex;flex-direction:column;gap:12px}
+.ins-i{display:flex;gap:12px;padding:12px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);font-size:13px;line-height:1.55}
+.ins-i .kpi-ic{width:32px;height:32px;border-radius:9px}
+.al{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--border)}
+.al:last-child{border-bottom:0}
+.al-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none}
+.al-b{flex:1;min-width:0}
+.al-t{font-weight:600;font-size:13px;line-height:1.4}
+.al-d{font-size:12px;color:var(--muted);margin-top:2px}
+.ai-card{background:linear-gradient(135deg,rgba(15,181,174,.10),rgba(124,92,255,.10));border-color:rgba(124,92,255,.25)}
+/* tracking */
+.plist{display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 290px);overflow-y:auto;margin:0 -8px;padding:0 8px}
+.pli{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;text-align:start;width:100%}
+.pli:hover{background:var(--surface-2)}
+.pli.on{background:var(--brand-bg)}
+.pli .sd{width:8px;height:8px;border-radius:50%;flex:none}
+.pli b{font-size:12.5px;font-weight:600;display:block;line-height:1.35}
+.ph-card{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ph-ic{width:56px;height:56px;border-radius:16px;background:var(--grad);display:grid;place-items:center;color:#fff;flex:none}
+.ph-ic .ic{width:28px;height:28px}
+.mini{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:18px}
+.mini div{padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border)}
+.mini small{display:block;font-size:11.5px;color:var(--muted)}
+.mini b{font-size:17px;font-weight:700}
+.trace{display:flex;gap:0;padding:18px 8px 6px;overflow-x:auto}
+.tr-s{flex:1;min-width:120px;position:relative;text-align:center;padding:0 6px}
+.tr-s::before{content:"";position:absolute;top:15px;inset-inline-start:50%;width:100%;height:2px;background:var(--border-2)}
+.tr-s:last-child::before{display:none}
+.tr-s.done::before{background:var(--brand)}
+.tr-d{width:32px;height:32px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;background:var(--surface);border:2px solid var(--border-2);position:relative;z-index:1;color:var(--faint)}
+.tr-s.done .tr-d{background:var(--brand);border-color:var(--brand);color:#fff}
+.tr-s.warn .tr-d{background:var(--warn);border-color:var(--warn);color:#fff}
+.tr-s.bad .tr-d{background:var(--danger);border-color:var(--danger);color:#fff}
+.tr-d .ic{width:15px;height:15px}
+.tr-s b{font-size:12px;display:block}.tr-s small{font-size:11.5px;color:var(--muted)}
+.xrow td{background:var(--surface-2)}
+/* upload */
+.drop{border:2px dashed var(--border-2);border-radius:18px;padding:44px 24px;text-align:center;cursor:pointer;transition:.2s;background:var(--surface-2)}
+.drop:hover,.drop.over{border-color:var(--brand);background:var(--brand-bg)}
+.drop .big{width:64px;height:64px;border-radius:18px;margin:0 auto 14px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 10px 24px rgba(47,107,255,.3)}
+.drop .big .ic{width:28px;height:28px}
+.steps{display:flex;gap:10px;margin:6px 0 18px}
+.step{flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.step .n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface-3);font-size:12px;flex:none}
+.step.done{color:var(--text)}.step.done .n{background:var(--ok);color:#fff}
+.step.act{border-color:var(--brand);color:var(--text)}.step.act .n{background:var(--brand);color:#fff;animation:pulse 1.4s infinite}
+.prog{height:8px;border-radius:5px;background:var(--surface-3);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--grad);transition:width .4s}
+.cols{display:flex;flex-wrap:wrap;gap:8px}
+.cols span{padding:6px 11px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);font-size:12px;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.cols .ic{width:14px;height:14px;color:var(--ok)}
+/* reports */
+.rp{display:flex;flex-direction:column;gap:14px;transition:.2s}
+.rp:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.rp-ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center}
+.rp h3{font-size:15px}.rp p{font-size:12.5px;color:var(--muted);flex:1}
+.rp-f{display:flex;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:14px;font-size:11.5px;color:var(--faint)}
+/* access */
+.pm{width:28px;height:28px;border-radius:8px;display:inline-grid;place-items:center;transition:.15s}
+.pm.y{background:var(--ok-bg);color:var(--ok)}.pm.n{background:var(--surface-3);color:var(--faint)}
+.pm:hover{transform:scale(1.12)}
+.pm .ic{width:15px;height:15px}
+/* roadmap */
+.rm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;position:relative}
+.rm-c{position:relative}
+.rm-c.cur{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-bg),var(--shadow)}
+.rm-n{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-weight:800;font-size:16px;margin-bottom:14px}
+.rm-c ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.rm-c li{display:flex;gap:9px;font-size:13px;align-items:flex-start}
+.rm-c li .ic{width:16px;height:16px;margin-top:2px}
+/* modal / toasts / tooltip */
+#modal{position:fixed;inset:0;background:rgba(5,13,28,.55);backdrop-filter:blur(4px);z-index:90;display:none;align-items:center;justify-content:center;padding:24px}
+#modal.open{display:flex}
+.mdl{background:var(--surface);border-radius:20px;max-width:900px;width:100%;max-height:90vh;overflow:auto;box-shadow:var(--shadow-lg);animation:fadeUp .3s}
+.mdl-h{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:2}
+.rp-doc{padding:30px 34px}
+.rp-doc .hd{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;border-bottom:3px solid var(--brand);margin-bottom:20px;gap:20px}
+#toasts{position:fixed;bottom:24px;inset-inline-end:24px;z-index:99;display:flex;flex-direction:column;gap:10px}
+.toast{display:flex;gap:10px;align-items:center;background:#0B1B33;color:#fff;padding:13px 16px;border-radius:12px;box-shadow:var(--shadow-lg);font-size:13px;font-weight:500;animation:fadeUp .3s;max-width:420px}
+.toast .ic{color:#34D399}
+#tip{position:fixed;z-index:100;pointer-events:none;background:#0B1B33;color:#fff;padding:9px 12px;border-radius:10px;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .1s;max-width:300px;line-height:1.55}
+#tip.on{opacity:1}
+#tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-inline-end:6px}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.muted{color:var(--muted)}.faint{color:var(--faint)}
+.row{display:flex;align-items:center;gap:10px}
+.sp{flex:1}
+.mt{margin-top:16px}
+@media (max-width:1400px){.g-kpi{grid-template-columns:repeat(3,minmax(0,1fr))}.mini{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1100px){.g-21,.g-12,.g-3,.rm{grid-template-columns:1fr 1fr}.g-4{grid-template-columns:1fr 1fr}.gsearch,.user div,.period-wrap span{display:none}}
+@media (max-width:860px){#app{grid-template-columns:1fr}#sidebar{display:none}.g-kpi,.g-21,.g-12,.g-2,.g-3,.g-4,.rm{grid-template-columns:1fr}#content{padding:18px 16px 40px}.seg button span,.logo-sub,.logo-name span{display:none}.top-mid{justify-content:flex-end}.user{display:none}.mini{grid-template-columns:1fr 1fr}.topbar{gap:10px;padding:0 12px}}
+@media print{body{overflow:visible}body>*:not(#modal){display:none!important}#modal{position:static;background:none;display:block;padding:0}.mdl{box-shadow:none;max-height:none}.mdl-h{display:none}}
+
+/* ---------- DECK ---------- */
+#deck{position:fixed;inset:64px 0 0 0;display:none;overflow:hidden;color:#E8EFF9;
+  background:radial-gradient(1200px 700px at 85% -10%,rgba(47,107,255,.28),transparent 60%),radial-gradient(900px 600px at -5% 110%,rgba(15,181,174,.25),transparent 60%),radial-gradient(600px 400px at 50% 50%,rgba(124,92,255,.08),transparent 70%),#050D1C}
+body.deck #deck{display:block}
+#deck::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+.stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center}
+.slide{position:absolute;inset:0;padding:64px 110px 120px;display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;transform:translateX(50px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1),visibility .6s}
+[dir=rtl] .slide{transform:translateX(-50px)}
+.slide.past{transform:translateX(-50px)}
+[dir=rtl] .slide.past{transform:translateX(50px)}
+.slide.on{opacity:1;visibility:visible;transform:none!important}
+.slide [data-rv]{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.slide.on [data-rv]{opacity:1;transform:none}
+.kick{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4FE0D6;margin-bottom:18px}
+html[lang=ar] .kick{letter-spacing:0;font-size:18px}
+.kick::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,#0FB5AE,#2F6BFF)}
+.s-h{font-size:54px;line-height:1.12;font-weight:700;letter-spacing:-.025em;color:#fff;max-width:1250px}
+html[lang=ar] .s-h{letter-spacing:0;line-height:1.35;font-size:52px}
+.s-p{font-size:22px;line-height:1.6;color:#A8B8D0;margin-top:18px;max-width:1100px}
+.gt{background:linear-gradient(90deg,#4FE0D6,#6E9BFF 60%,#A38BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glass{background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);border-radius:22px;backdrop-filter:blur(12px);box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.s-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(15,181,174,.25),rgba(47,107,255,.25));color:#7FEAE3;border:1px solid rgba(127,234,227,.2)}
+.s-ic .ic{width:26px;height:26px}
+.cover{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center;height:100%}
+.cover h1{font-size:92px;line-height:1;font-weight:800;letter-spacing:-.04em;color:#fff;font-family:'Inter',sans-serif}
+.cover .arname{font-size:30px;font-weight:600;color:#C9D6EA;margin-top:22px}
+.cover .tag{font-size:27px;line-height:1.5;color:#9FB2CE;margin-top:26px;font-weight:300;max-width:720px}
+html[lang=ar] .cover .tag{font-weight:400}
+.cover .meta{display:flex;gap:14px;align-items:center;margin-top:34px;font-size:17px;color:#7F93B2}
+.sbtn{display:inline-flex;align-items:center;gap:12px;height:62px;padding:0 30px;border-radius:16px;font-size:19px;font-weight:700;color:#fff;transition:.2s}
+.sbtn.p{background:linear-gradient(135deg,#0FB5AE,#2F6BFF);box-shadow:0 14px 34px rgba(47,107,255,.4)}
+.sbtn.g{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04)}
+.sbtn:hover{transform:translateY(-2px)}
+.sbtn .ic{width:22px;height:22px}
+.mock{padding:26px;position:relative}
+.mock-k{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mock-k div{padding:16px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)}
+.mock-k small{display:block;color:#8EA2C0;font-size:13px;line-height:1.3;min-height:34px}
+.mock-k b{font-size:24px;color:#fff;display:block;margin-top:6px;white-space:nowrap}
+.mock .lc .gl{stroke:rgba(255,255,255,.07)}.mock .lc .ax{fill:#6F84A5;font-size:12px}
+.mock-a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);font-size:14.5px;color:#D5DFEE;margin-top:10px}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.orb{position:absolute;border-radius:50%;border:1px solid rgba(127,234,227,.14);pointer-events:none}
+.flow{display:flex;flex-direction:column;gap:0}
+.fl{display:flex;gap:18px;align-items:center;padding:18px 22px;font-size:20px;font-weight:600;color:#E3EBF7}
+.fl-n{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);font-size:17px;flex:none}
+.fl-ar{height:26px;margin-inline-start:42px;border-inline-start:2px dashed rgba(255,255,255,.18)}
+.pain{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pain .glass{padding:22px 24px;display:flex;gap:16px;align-items:flex-start}
+.pain h4{font-size:20px;color:#fff;margin-bottom:5px}
+.pain p{font-size:16px;color:#9FB2CE;line-height:1.5}
+.red-ic{background:linear-gradient(135deg,rgba(240,68,56,.25),rgba(245,158,11,.18));color:#FF9C8F;border-color:rgba(255,156,143,.22)}
+.arch{display:flex;align-items:stretch;gap:0;margin-top:46px}
+.an{flex:1;padding:26px 20px;text-align:center;position:relative}
+.an .s-ic{margin:0 auto 16px;width:64px;height:64px;border-radius:18px}
+.an .s-ic .ic{width:30px;height:30px}
+.an h4{font-size:20px;color:#fff}.an p{font-size:15.5px;color:#93A7C5;margin-top:6px;line-height:1.45}
+.ac{width:54px;display:grid;place-items:center;color:#4FE0D6;flex:none}
+.ac .ic{width:28px;height:28px}
+.ac-line{width:100%;height:2px;background:repeating-linear-gradient(90deg,#4FE0D6 0 8px,transparent 8px 14px);background-size:28px 2px;animation:dash 1s linear infinite}
+@keyframes dash{to{background-position:28px 0}}
+[dir=rtl] .ac-line{animation-direction:reverse}
+.ba{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.ba .glass{padding:18px 20px;font-size:16px}
+.ba s{color:#7488A8;text-decoration-color:rgba(240,68,56,.6)}
+.ba b{color:#fff;display:flex;align-items:center;gap:8px;margin-top:6px;font-size:18px}
+.ba b .ic{color:#4FE0D6}
+.caps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px}
+.caps .glass{padding:28px 26px;transition:.25s}
+.caps .glass:hover{transform:translateY(-4px);border-color:rgba(79,224,214,.35)}
+.caps h4{font-size:21px;color:#fff;margin:18px 0 8px}
+.caps p{font-size:16px;color:#97AACA;line-height:1.5}
+.demo{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;height:100%}
+.mods{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mods button{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);color:#E3EBF7;font-size:17.5px;font-weight:600;text-align:start;transition:.2s}
+.mods button:hover{background:rgba(79,224,214,.1);border-color:rgba(79,224,214,.4);transform:translateY(-2px)}
+.mods .s-ic{width:42px;height:42px;border-radius:12px}
+.mods .s-ic .ic{width:21px;height:21px}
+.mods .flip{margin-inline-start:auto;color:#5F7596}
+.deps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.deps .glass{padding:24px}
+.deps h4{font-size:20px;color:#fff;margin:16px 0 8px}
+.deps p{font-size:16px;color:#97AACA;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.stats .glass{padding:30px 32px}
+.stats b{font-size:64px;font-weight:800;letter-spacing:-.03em;display:block;line-height:1.05;font-family:'Inter',sans-serif}
+.stats p{font-size:18px;color:#A8B8D0;margin-top:10px;line-height:1.45}
+.note{margin-top:26px;font-size:15px;color:#7488A8;display:flex;gap:8px;align-items:center}
+.srm{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:50px;position:relative}
+.srm::before{content:"";position:absolute;top:31px;left:4%;right:4%;height:2px;background:linear-gradient(90deg,#0FB5AE,#2F6BFF,#7C5CFF,rgba(124,92,255,.2))}
+[dir=rtl] .srm::before{background:linear-gradient(-90deg,#0FB5AE,#2F6BFF,#7C5CFF,rgba(124,92,255,.2))}
+.srm-c{position:relative}
+.srm-d{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;background:#0B1A31;border:2px solid #2F6BFF;position:relative;z-index:1;margin-bottom:20px}
+.srm-c.cur .srm-d{background:linear-gradient(135deg,#0FB5AE,#2F6BFF);border:0;box-shadow:0 0 0 8px rgba(15,181,174,.15)}
+.srm-c .glass{padding:22px 22px}
+.srm-c h4{font-size:20px;color:#fff}
+.srm-c .when{font-size:14.5px;color:#4FE0D6;font-weight:700;margin-top:4px}
+.srm-c ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.srm-c li{font-size:15.5px;color:#B3C2D8;display:flex;gap:9px;line-height:1.4}
+.srm-c li::before{content:"";width:6px;height:6px;border-radius:50%;background:#4FE0D6;margin-top:9px;flex:none}
+.tagc{display:inline-flex;font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;margin-top:10px}
+.gantt{padding:28px 30px}
+.gt-row{display:grid;grid-template-columns:300px 1fr;align-items:center;gap:16px;height:58px}
+.gt-l{font-size:17px;color:#DDE6F3;font-weight:500}
+.gt-t{position:relative;height:100%;display:grid;grid-template-columns:repeat(12,1fr)}
+.gt-t span{border-inline-start:1px solid rgba(255,255,255,.06)}
+.gt-b{position:absolute;top:14px;height:30px;border-radius:9px;display:flex;align-items:center;padding:0 12px;font-size:13px;font-weight:700;color:#fff;white-space:nowrap}
+.gt-h{font-size:13px;color:#7488A8;text-align:center}
+.need{display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:17.5px;color:#DDE6F3}
+.need:last-child{border:0}
+.dec{display:flex;flex-direction:column;gap:16px;margin-top:40px}
+.dec .glass{display:flex;align-items:center;gap:22px;padding:22px 28px;font-size:22px;color:#fff;font-weight:500}
+.dec .n{width:50px;height:50px;border-radius:14px;flex:none;display:grid;place-items:center;font-weight:800;font-size:20px;background:linear-gradient(135deg,#0FB5AE,#2F6BFF)}
+.glance{padding:30px}
+.glance div{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:17px;color:#A8B8D0;gap:16px}
+.glance div:last-child{border:0}
+.glance b{color:#fff;text-align:end}
+.thanks{text-align:center;align-items:center}
+.thanks h2{font-size:110px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1.1}
+html[lang=ar] .thanks h2{letter-spacing:0;font-size:100px}
+.dnav{position:absolute;bottom:24px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:16px;z-index:5;pointer-events:none}
+.dnav>*{pointer-events:auto}
+.dnav .nb{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;transition:.2s}
+.dnav .nb:hover{background:rgba(255,255,255,.14)}
+.dnav .nb:disabled{opacity:.3;cursor:default}
+.dots{display:flex;gap:7px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.dots button{width:8px;height:8px;border-radius:5px;background:rgba(255,255,255,.25);transition:.3s}
+.dots button.on{width:26px;background:linear-gradient(90deg,#0FB5AE,#2F6BFF)}
+.dcount{direction:ltr;unicode-bidi:isolate;position:absolute;bottom:34px;inset-inline-start:30px;font-size:13px;color:#7488A8;font-weight:600;letter-spacing:.06em;z-index:5}
+.dhint{position:absolute;bottom:34px;inset-inline-end:30px;font-size:12.5px;color:#5F7596;z-index:5}
+.dprog{position:absolute;top:0;inset-inline-start:0;height:3px;background:linear-gradient(90deg,#0FB5AE,#2F6BFF);transition:width .5s;z-index:5}
+@media (max-width:860px){.dhint{display:none}}
+</style>
+</head>
+<body class="deck">
+<div id="tip"></div>
+<header class="topbar" id="topbar"></header>
+<main id="deck"><div class="dprog" id="dprog"></div><div class="stage" id="stage"></div>
+  <div class="dcount" id="dcount"></div><div class="dhint" id="dhint"></div>
+  <div class="dnav"><button class="nb" data-act="prev" id="dprev"></button><div class="dots" id="dots"></div><button class="nb" data-act="next" id="dnext"></button></div>
+</main>
+<div id="app"><aside id="sidebar"></aside><section id="content"></section></div>
+<div id="modal"></div>
+<div id="toasts"></div>
+<input type="file" id="upfile" accept=".xlsx,.xls,.csv" hidden>
+<script>
+/* ================= BILINGUAL DICTIONARY ================= */
+const arPl=(n,one,two,few,many)=>{n=Math.abs(n);if(n===1)return one;if(n===2)return two;if(n>=3&&n<=10)return `${n} ${few}`;return `${n.toLocaleString('en-US')} ${many}`};
+const L={
+brand_sub:['Sudair Pharma','سدير للأدوية'],
+tagline:['One Platform. Complete Inventory Visibility. Smarter Decisions.','منصة واحدة. رؤية شاملة للمخزون. قرارات أكثر ذكاءً.'],
+view_deck:['Presentation','العرض التقديمي'],view_app:['Live Platform','المنصة التفاعلية'],
+theme:['Toggle light / dark theme','تبديل المظهر الفاتح / الداكن'],fullscreen:['Full screen','ملء الشاشة'],
+report_period:['Report','التقرير'],user_name:['Executive Viewer','مستخدم تنفيذي'],user_role:['Executive Management','الإدارة التنفيذية'],
+search_ph:['Search products, item codes or batches…','ابحث عن منتج أو رمز صنف أو تشغيلة…'],
+notifications:['Notifications','الإشعارات'],view_all:['View all alerts','عرض جميع التنبيهات'],mark_read:['Mark all as read','تحديد الكل كمقروء'],
+back_deck:['Back to presentation','العودة إلى العرض التقديمي'],
+src_title:['Live data source','مصدر البيانات'],src_desc:['Supply Chain monthly inventory report','تقرير المخزون الشهري – سلسلة الإمداد'],src_sync:['Uploaded','تاريخ الرفع'],
+g_overview:['Overview','نظرة عامة'],g_inventory:['Inventory','المخزون'],g_intel:['Intelligence','الذكاء والتحليل'],g_data:['Data & Reports','البيانات والتقارير'],g_admin:['Administration','الإدارة والحوكمة'],
+m_dashboard:['Executive Dashboard','لوحة القيادة التنفيذية'],m_inventory:['Inventory Explorer','مستكشف المخزون'],m_tracking:['Product & Batch Tracking','تتبع المنتجات والتشغيلات'],m_expiry:['Expiry Risk','مخاطر انتهاء الصلاحية'],m_analytics:['Analytics & Insights','التحليلات والرؤى'],m_alerts:['Smart Alerts','التنبيهات الذكية'],m_upload:['Data Upload Center','مركز رفع البيانات'],m_reports:['Reports','التقارير'],m_access:['Access & Permissions','الصلاحيات والوصول'],m_roadmap:['Platform Roadmap','خارطة طريق المنصة'],
+home:['PharmaStock','PharmaStock'],
+cat_an:['Analgesics & Antipyretics','المسكنات وخافضات الحرارة'],cat_ab:['Anti-infectives','مضادات العدوى'],cat_cv:['Cardiovascular','القلب والأوعية الدموية'],cat_db:['Diabetes & Metabolic','السكري والأيض'],cat_gi:['Gastrointestinal','الجهاز الهضمي'],cat_rs:['Respiratory & Allergy','الجهاز التنفسي والحساسية'],cat_vt:['Vitamins & Supplements','الفيتامينات والمكملات'],cat_dm:['Dermatology','الأمراض الجلدية'],cat_api:['Raw Materials (API & Excipients)','المواد الخام (فعالة وسواغات)'],cat_pk:['Packaging Materials','مواد التعبئة والتغليف'],
+type_FG:['Finished Goods','منتجات تامة الصنع'],type_RM:['Raw Materials','مواد خام'],type_PM:['Packaging Materials','مواد التعبئة'],
+wh_FG:['Finished Goods Warehouse','مستودع المنتجات التامة'],wh_RM:['Raw Materials Store','مستودع المواد الخام'],wh_CC:['Cold Chain Store (2–8°C)','مستودع التبريد (2–8°م)'],wh_PK:['Packaging Materials Store','مستودع مواد التعبئة'],wh_QA:['Quarantine Area','منطقة الحجر'],
+uom_FG:['packs','عبوة'],uom_RM:['kg','كغ'],uom_PM:['units','وحدة'],
+st_healthy:['Healthy','مستوى آمن'],st_low:['Low stock','مخزون منخفض'],st_over:['Overstock','مخزون فائض'],st_out:['Out of stock','نفد المخزون'],
+bs_rel:['Released','مُفرج عنها'],bs_quar:['Quarantine','تحت الحجر'],bs_hold:['On hold','موقوفة مؤقتاً'],bs_blocked:['Expired · Blocked','منتهية · محظورة'],
+bk_exp:['Expired','منتهية الصلاحية'],bk_b90:['0–90 days','0–90 يوماً'],bk_b180:['91–180 days','91–180 يوماً'],bk_b365:['181–365 days','181–365 يوماً'],bk_more:['Over 1 year','أكثر من سنة'],
+dash_s:['Consolidated inventory position across all warehouses and storage locations','الوضع الموحّد للمخزون في جميع المستودعات ومواقع التخزين'],
+kpi_value:['Total Inventory Value','إجمالي قيمة المخزون'],kpi_skus:['Active SKUs','الأصناف النشطة'],kpi_batches:['Active Batches','التشغيلات النشطة'],kpi_near:['Near-Expiry Value (≤180 days)','قيمة قريب الانتهاء (≤180 يوماً)'],kpi_expired:['Expired Stock Value','قيمة المخزون المنتهي'],kpi_low:['Low / Out-of-Stock Items','أصناف منخفضة أو نافدة'],
+vs_prev:['vs. previous report','مقارنة بالتقرير السابق'],of_total:['of total value','من إجمالي القيمة'],
+of_n:[n=>`of ${n} catalogued items`,n=>`من أصل ${n} صنفاً مسجلاً`],
+in_locs:['in 5 storage locations','في 5 مواقع تخزين'],
+n_batches:[n=>`${n} batches`,n=>arPl(n,'تشغيلة واحدة','تشغيلتان','تشغيلات','تشغيلة')],
+n_items:[n=>`${n} items`,n=>arPl(n,'صنف واحد','صنفان','أصناف','صنفاً')],
+n_out:[n=>`${n} out of stock`,n=>`${n} نافدة بالكامل`],
+days:[n=>`${n} days`,n=>arPl(n,'يوم واحد','يومان','أيام','يوماً')],
+exp_ago:[n=>`Expired ${n} days ago`,n=>`انتهت منذ ${arPl(n,'يوم واحد','يومين','أيام','يوماً')}`],
+mo:[n=>`${n} mo`,n=>`${n} شهر`],
+ch_trend:['Inventory Value Trend','اتجاه قيمة المخزون'],ch_trend_s:['Total value across the last 12 monthly reports','إجمالي القيمة عبر آخر 12 تقريراً شهرياً'],
+ch_cat:['Value by Category','القيمة حسب الفئة'],ch_cat_s:['Share of total inventory value','الحصة من إجمالي قيمة المخزون'],
+ch_expiry:['Expiry Profile','ملف انتهاء الصلاحية'],ch_expiry_s:['Inventory value by remaining shelf life','قيمة المخزون حسب العمر المتبقي'],
+ch_health:['Stock Health','صحة المخزون'],ch_health_s:['Items by stock-cover status','الأصناف حسب حالة تغطية المخزون'],
+ch_ins:['Smart Insights','رؤى ذكية'],ch_ins_s:['Auto-generated from the latest report','مولَّدة تلقائياً من آخر تقرير'],
+tbl_near:['Batches Approaching Expiry','تشغيلات تقترب من انتهاء الصلاحية'],tbl_near_s:['Sorted by remaining days — first expiry, first out','مرتبة حسب الأيام المتبقية — الأقرب انتهاءً يُصرف أولاً'],
+tbl_alerts:['Priority Alerts','التنبيهات ذات الأولوية'],
+total_value:['Total value','إجمالي القيمة'],near_value:['Near-expiry value','قيمة قريب الانتهاء'],items_lbl:['Items','الأصناف'],
+c_code:['Item Code','رمز الصنف'],c_item:['Item Description','وصف الصنف'],c_cat:['Category','الفئة'],c_wh:['Warehouse','المستودع'],c_batches:['Batches','التشغيلات'],c_qty:['Quantity','الكمية'],c_cover:['Stock Cover','تغطية المخزون'],c_value:['Value','القيمة'],c_nexp:['Nearest Expiry','أقرب انتهاء'],c_status:['Status','الحالة'],c_batch:['Batch No.','رقم التشغيلة'],c_mfg:['Mfg. Date','تاريخ التصنيع'],c_exp:['Expiry Date','تاريخ الانتهاء'],c_life:['Remaining Shelf Life','العمر المتبقي'],c_loc:['Location','الموقع'],c_action:['Recommended Action','الإجراء المقترح'],c_type:['Item Type','نوع الصنف'],c_product:['Product','المنتج'],c_uom:['Unit of Measure','وحدة القياس'],c_cost:['Unit Cost','تكلفة الوحدة'],c_bstatus:['Batch Status','حالة التشغيلة'],c_share:['Share','الحصة'],c_users:['Users','المستخدمون'],c_dept:['Department','الإدارة'],
+inv_s:['Search, filter and analyze every item in the latest inventory report','ابحث وصفِّ وحلِّل كل صنف في آخر تقرير للمخزون'],
+f_search:['Search by item name, code or batch number…','ابحث باسم الصنف أو الرمز أو رقم التشغيلة…'],
+f_allcat:['All categories','جميع الفئات'],f_allwh:['All warehouses','جميع المستودعات'],f_alltype:['All item types','جميع أنواع الأصناف'],f_allst:['All stock statuses','جميع حالات المخزون'],
+results:[n=>`${n} items found`,n=>`عدد النتائج: ${n}`],
+export_xl:['Export to Excel','تصدير إلى Excel'],reset:['Reset','إعادة ضبط'],
+page_x:[(a,b)=>`Page ${a} of ${b}`,(a,b)=>`صفحة ${a} من ${b}`],prev:['Previous','السابق'],next:['Next','التالي'],
+no_results:['No items match the selected filters','لا توجد أصناف تطابق عوامل التصفية المحددة'],
+trk_s:['Batch-level visibility and traceability across monthly reports','رؤية على مستوى التشغيلة وتتبع عبر التقارير الشهرية'],
+trk_find:['Find a product…','ابحث عن منتج…'],
+on_hand:['On-hand quantity','الكمية المتوفرة'],inv_value:['Inventory value','قيمة المخزون'],stock_cover:['Stock cover','تغطية المخزون'],monthly_use:['Avg. monthly consumption','متوسط الاستهلاك الشهري'],nearest_exp:['Nearest expiry','أقرب تاريخ انتهاء'],
+stock_hist:['Stock Level History','سجل مستوى المخزون'],stock_hist_s:['On-hand quantity across the last 6 monthly reports','الكمية المتوفرة عبر آخر 6 تقارير شهرية'],
+min_level:['Minimum level','الحد الأدنى'],on_hand_s:['On hand','المتوفر'],
+batches_list:['Batch Register','سجل التشغيلات'],batches_list_s:['Click a batch to view its traceability journey','انقر على أي تشغيلة لعرض مسار تتبعها'],
+tr_mfg:['Manufactured','التصنيع'],tr_qc:['QC released','إفراج الجودة'],tr_qcp:['Pending QA release','بانتظار إفراج الجودة'],tr_store:['Stored','التخزين'],tr_rep:['In latest report','في آخر تقرير'],tr_exp:['Expiry','انتهاء الصلاحية'],
+no_batches:['No stock on hand — urgent replenishment required','لا يوجد مخزون متوفر — يلزم إعادة تزويد عاجلة'],
+shelf_used:['of shelf life consumed','من العمر الافتراضي مستهلك'],
+exp_s:['Identify, prioritize and act on inventory at risk of expiry','حدِّد المخزون المعرّض لانتهاء الصلاحية ورتّب أولوياته واتخذ الإجراء المناسب'],
+heat_t:['Expiry Heatmap','الخريطة الحرارية لانتهاء الصلاحية'],heat_s:['Value expiring by category over the next 12 months','القيمة التي تنتهي صلاحيتها حسب الفئة خلال الأشهر الـ12 القادمة'],
+risk_tbl:['At-Risk Batches','التشغيلات المعرّضة للخطر'],risk_tbl_s:['Expired and ≤180-day batches with recommended actions','التشغيلات المنتهية وخلال 180 يوماً مع الإجراءات المقترحة'],
+f_all:['All','الكل'],lowv:['Low','منخفض'],highv:['High','مرتفع'],
+act_destroy:['Quarantine & initiate destruction review','الحجر وبدء إجراءات مراجعة الإتلاف'],act_priority:['Prioritize dispatch (FEFO)','أولوية الصرف (الأقرب انتهاءً أولاً)'],act_sales:['Accelerate sell-through with Sales','تسريع التصريف بالتنسيق مع المبيعات'],act_use:['Schedule for priority production use','جدولة للاستخدام الإنتاجي ذي الأولوية'],
+an_s:['Deeper analysis of inventory distribution, coverage and value concentration','تحليل أعمق لتوزيع المخزون والتغطية وتركّز القيمة'],
+ch_wh:['Value by Storage Location','القيمة حسب موقع التخزين'],ch_wh_s:['Where inventory value is held','أين تتركز قيمة المخزون'],
+ch_cover:['Stock Cover by Category','تغطية المخزون حسب الفئة'],ch_cover_s:['Average months of consumption on hand','متوسط أشهر الاستهلاك المتوفرة'],target_band:['Target range: 2–6 months','النطاق المستهدف: 2–6 أشهر'],
+ch_abc:['ABC Value Classification','تصنيف ABC حسب القيمة'],ch_abc_s:['Share of value vs. number of items','حصة القيمة مقابل عدد الأصناف'],
+abc_A:['Class A — top 80% of value','الفئة A — أعلى 80% من القيمة'],abc_B:['Class B — next 15%','الفئة B — الـ15% التالية'],abc_C:['Class C — last 5%','الفئة C — آخر 5%'],
+ch_top:['Top 10 Items by Value','أعلى 10 أصناف من حيث القيمة'],
+ch_mom:['Total vs. Near-Expiry Value','إجمالي القيمة مقابل قيمة قريب الانتهاء'],ch_mom_s:['Monthly trend across the last 12 reports','الاتجاه الشهري عبر آخر 12 تقريراً'],
+al_s:['Generated automatically from inventory rules and thresholds','تُولَّد تلقائياً وفق قواعد وحدود المخزون المعتمدة'],
+sev_critical:['Critical','حرج'],sev_high:['High','مرتفع'],sev_medium:['Medium','متوسط'],sev_info:['Info','معلوماتي'],
+a_exp_t:[(p,b)=>`${p} — batch ${b} has expired`,(p,b)=>`${p} — انتهت صلاحية التشغيلة ${b}`],
+a_exp_d:[(q,v)=>`${q} units blocked in stock · ${v} at stake`,(q,v)=>`${q} وحدة محظورة في المخزون · بقيمة ${v}`],
+a_soon_t:[(p,b,d)=>`${p} — batch ${b} expires in ${d} days`,(p,b,d)=>`${p} — تنتهي صلاحية التشغيلة ${b} خلال ${arPl(d,'يوم','يومين','أيام','يوماً')}`],
+a_soon_d:[(q,v)=>`${q} units remaining · ${v} — prioritize dispatch`,(q,v)=>`${q} وحدة متبقية · ${v} — يوصى بأولوية الصرف`],
+a_out_t:[p=>`${p} is out of stock`,p=>`نفد مخزون ${p}`],a_out_d:[()=>'No available batches in the latest report — urgent replenishment required',()=>'لا توجد تشغيلات متاحة في آخر تقرير — يلزم إعادة تزويد عاجلة'],
+a_low_t:[p=>`${p} is below minimum stock level`,p=>`${p} دون الحد الأدنى للمخزون`],a_low_d:[c=>`Stock cover ${c} months vs. a 1-month minimum`,c=>`تغطية المخزون ${c} شهر مقابل حد أدنى شهر واحد`],
+a_quar_t:[(p,b)=>`${p} — batch ${b} awaiting QA release`,(p,b)=>`${p} — التشغيلة ${b} بانتظار إفراج ضمان الجودة`],a_quar_d:[q=>`${q} units held in the Quarantine Area`,q=>`${q} وحدة محتجزة في منطقة الحجر`],
+a_over_t:[p=>`${p} exceeds maximum stock level`,p=>`${p} يتجاوز الحد الأعلى للمخزون`],a_over_d:[c=>`Stock cover ${c} months — review the production plan`,c=>`تغطية المخزون ${c} شهر — يوصى بمراجعة خطة الإنتاج`],
+al_view:['View item','عرض الصنف'],al_from:[m=>`From ${m} report`,m=>`من تقرير ${m}`],all_read:['All alerts marked as read','تم تحديد جميع التنبيهات كمقروءة'],
+ins_near:[(v,p,c)=>`<b>${v}</b> of inventory (${p}%) expires within 180 days — largest exposure in <b>${c}</b>.`,(v,p,c)=>`<b>${v}</b> من المخزون (${p}%) تنتهي صلاحيته خلال 180 يوماً — أعلى تعرّض في فئة <b>${c}</b>.`],
+ins_low:[(n,x)=>`<b>${n} items</b> are below minimum stock, including ${x}.`,(n,x)=>`<b>${n} أصناف</b> دون الحد الأدنى للمخزون، منها ${x}.`],
+ins_up:[d=>`Total inventory value increased by <b>${d}%</b> versus the previous report.`,d=>`ارتفع إجمالي قيمة المخزون بنسبة <b>${d}%</b> مقارنة بالتقرير السابق.`],
+ins_down:[d=>`Total inventory value decreased by <b>${d}%</b> versus the previous report.`,d=>`انخفض إجمالي قيمة المخزون بنسبة <b>${d}%</b> مقارنة بالتقرير السابق.`],
+ins_top:[(c,p)=>`<b>${c}</b> holds ${p}% of total inventory value.`,(c,p)=>`تستحوذ فئة <b>${c}</b> على ${p}% من إجمالي قيمة المخزون.`],
+ins_quar:[(n,v)=>`<b>${n} batches</b> (${v}) are awaiting QA release in quarantine.`,(n,v)=>`<b>${n} تشغيلات</b> (${v}) بانتظار إفراج ضمان الجودة في منطقة الحجر.`],
+and:[' and ',' و'],
+up_s:['Upload the monthly Supply Chain inventory report to refresh the entire platform','ارفع تقرير المخزون الشهري من سلسلة الإمداد لتحديث المنصة بالكامل'],
+drop_t:['Drag & drop the inventory report here','اسحب تقرير المخزون وأفلته هنا'],drop_s:['or click to browse · Excel (.xlsx, .xls) or CSV · up to 25 MB','أو انقر للاستعراض · ملفات Excel أو CSV · حتى 25 ميغابايت'],
+demo_file:['Use sample report','استخدام تقرير تجريبي'],
+step_upload:['Upload','الرفع'],step_validate:['Validate','التحقق'],step_map:['Map columns','مطابقة الأعمدة'],step_load:['Load & publish','التحميل والنشر'],
+up_progress:['Processing report…','جارٍ معالجة التقرير…'],up_done:['Validation complete','اكتمل التحقق'],
+v_rows:['Rows read','السجلات المقروءة'],v_valid:['Valid records','السجلات الصالحة'],v_warn:['Warnings','تحذيرات'],v_score:['Data quality score','مؤشر جودة البيانات'],
+w1:['3 rows missing expiry date — flagged for Supply Chain review','3 سجلات بدون تاريخ انتهاء — أُحيلت لمراجعة سلسلة الإمداد'],w2:['4 rows with unrecognized warehouse code "WH-09"','4 سجلات تحمل رمز مستودع غير معروف "WH-09"'],w3:['All 10 required columns mapped automatically','تمت مطابقة جميع الأعمدة العشرة المطلوبة تلقائياً'],
+publish:['Publish to platform','النشر على المنصة'],published:['Report published — all dashboards refreshed','تم نشر التقرير — جرى تحديث جميع لوحات المعلومات'],
+tpl_t:['Expected report structure','هيكل التقرير المعتمد'],tpl_s:['The platform reads the existing Supply Chain report format — no change to current work','تقرأ المنصة صيغة تقرير سلسلة الإمداد الحالية — دون أي تغيير في العمل القائم'],
+hist_t:['Upload History','سجل عمليات الرفع'],h_file:['File','الملف'],h_period:['Period','الفترة'],h_by:['Uploaded by','بواسطة'],h_date:['Date','التاريخ'],h_records:['Records','السجلات'],h_quality:['Quality','الجودة'],
+pub_ok:['Published','منشور'],by_sc:['Supply Chain – Inventory Control','سلسلة الإمداد – مراقبة المخزون'],upload_new:['Upload another report','رفع تقرير آخر'],
+future_erp:['Phase 2: direct ERP integration will replace manual uploads with automated daily synchronization','المرحلة الثانية: سيحل الربط المباشر مع نظام ERP محل الرفع اليدوي بمزامنة يومية آلية'],
+rp_s:['Generate standardized, ready-to-share reports on demand','أنشئ تقارير موحّدة جاهزة للمشاركة عند الطلب'],
+r1:['Monthly Inventory Summary','ملخص المخزون الشهري'],r1d:['Consolidated stock position, value and KPIs by category and warehouse','الوضع الموحّد للمخزون وقيمته ومؤشراته حسب الفئة والمستودع'],
+r2:['Expiry Risk Report','تقرير مخاطر انتهاء الصلاحية'],r2d:['Expired and near-expiry batches with recommended actions','التشغيلات المنتهية وقريبة الانتهاء مع الإجراءات المقترحة'],
+r3:['Batch Traceability Register','سجل تتبع التشغيلات'],r3d:['Full batch register with manufacturing, expiry and location details','السجل الكامل للتشغيلات مع بيانات التصنيع والانتهاء والموقع'],
+r4:['Low Stock & Replenishment','المخزون المنخفض وإعادة التزويد'],r4d:['Items below minimum level and out-of-stock items','الأصناف دون الحد الأدنى والأصناف النافدة'],
+r5:['Warehouse Stock Report','تقرير مخزون المستودعات'],r5d:['Inventory quantity and value per storage location','كمية المخزون وقيمته لكل موقع تخزين'],
+r6:['Executive Brief','الموجز التنفيذي'],r6d:['One-page summary of key indicators and insights for leadership','ملخص من صفحة واحدة لأهم المؤشرات والرؤى للقيادة'],
+preview:['Preview','معاينة'],export:['Export','تصدير'],based_on:['Based on','وفق'],rows_n:[n=>`${n} rows`,n=>`${n} سجل`],
+sched_t:['Scheduled Distribution','التوزيع المجدول'],sched_s:['Automated delivery to departments — available in Phase 3','إرسال تلقائي للتقارير إلى الإدارات — متاح في المرحلة الثالثة'],
+sc1:['Executive Brief → Executive Management','الموجز التنفيذي ← الإدارة التنفيذية'],sc1w:['Monthly · 3rd working day','شهرياً · يوم العمل الثالث'],
+sc2:['Expiry Risk Report → Sales, QA, Supply Chain','تقرير مخاطر الانتهاء ← المبيعات، الجودة، سلسلة الإمداد'],sc2w:['Every Sunday 08:00','كل أحد 08:00'],
+sc3:['Low Stock Report → Production Planning','تقرير المخزون المنخفض ← تخطيط الإنتاج'],sc3w:['Daily 07:30','يومياً 07:30'],
+exported:[n=>`“${n}” exported successfully`,n=>`تم تصدير «${n}» بنجاح`],print:['Print / Save as PDF','طباعة / حفظ PDF'],close:['Close','إغلاق'],generated_on:['Generated on','تاريخ الإنشاء'],confidential:['Confidential — internal use only','سري — للاستخدام الداخلي فقط'],period_l:['Reporting period','فترة التقرير'],
+ac_s:['Role-based access by department — click any cell to grant or revoke a permission','التحكم في الوصول حسب الإدارة — انقر على أي خانة لمنح الصلاحية أو سحبها'],
+perm_dash:['Dashboards','لوحات المعلومات'],perm_inv:['Inventory data','بيانات المخزون'],perm_batch:['Batch details','تفاصيل التشغيلات'],perm_cost:['Cost & value','التكلفة والقيمة'],perm_export:['Export reports','تصدير التقارير'],perm_upload:['Upload data','رفع البيانات'],perm_admin:['Administration','إدارة المنصة'],
+dep_exec:['Executive Management','الإدارة التنفيذية'],dep_sc:['Supply Chain','سلسلة الإمداد'],dep_prod:['Production & Planning','الإنتاج والتخطيط'],dep_qa:['Quality Assurance','ضمان الجودة'],dep_sales:['Sales & Marketing','المبيعات والتسويق'],dep_fin:['Finance','المالية'],dep_reg:['Regulatory Affairs','الشؤون التنظيمية'],dep_it:['IT — Platform Admin','تقنية المعلومات — إدارة المنصة'],
+perm_upd:['Permission updated and logged in the audit trail','تم تحديث الصلاحية وتسجيلها في سجل التدقيق'],
+gov_t:['Security & Governance','الأمن والحوكمة'],gov1:['Single sign-on with corporate accounts','تسجيل دخول موحّد بحسابات الشركة'],gov2:['Full audit trail of views, uploads and exports','سجل تدقيق كامل لعمليات العرض والرفع والتصدير'],gov3:['Department-level data visibility rules','قواعد إظهار البيانات على مستوى الإدارة'],gov4:['Encryption of data at rest and in transit','تشفير البيانات أثناء التخزين والنقل'],
+log_t:['Recent Activity','آخر الأنشطة'],
+lg1:['Supply Chain uploaded the October 2026 inventory report','رفعت سلسلة الإمداد تقرير المخزون لشهر أكتوبر 2026'],lg2:['Finance exported the Monthly Inventory Summary','صدّرت المالية ملخص المخزون الشهري'],lg3:['QA viewed batch traceability for Amoxicillin 500 mg','اطلعت إدارة الجودة على تتبع تشغيلات أموكسيسيلين 500 ملغ'],lg4:['IT granted Sales access to batch details','منحت تقنية المعلومات المبيعات صلاحية تفاصيل التشغيلات'],
+lgt1:['2 Nov, 09:14','2 نوفمبر، 09:14'],lgt2:['2 Nov, 11:40','2 نوفمبر، 11:40'],lgt3:['3 Nov, 08:05','3 نوفمبر، 08:05'],lgt4:['4 Nov, 13:22','4 نوفمبر، 13:22'],
+rm_s:['A phased evolution from report-based insight to an intelligent, integrated platform','تطور مرحلي من رؤى مبنية على التقارير إلى منصة ذكية ومتكاملة'],
+ph1:['Foundation','التأسيس'],ph1w:['Phase 1 · Q1 2027','المرحلة الأولى · الربع الأول 2027'],
+ph1i:[['Monthly report upload & validation','Executive dashboard & KPIs','Inventory explorer & batch tracking','Expiry risk analytics','Role-based access','Arabic / English interface'],['رفع التقارير الشهرية والتحقق منها','لوحة القيادة التنفيذية والمؤشرات','مستكشف المخزون وتتبع التشغيلات','تحليلات مخاطر انتهاء الصلاحية','صلاحيات وصول حسب الدور','واجهة عربية / إنجليزية']],
+ph2:['Integration','التكامل'],ph2w:['Phase 2 · Q2–Q3 2027','المرحلة الثانية · الربع 2–3 2027'],
+ph2i:[['Direct ERP integration','Automated daily data synchronization','Master-data alignment','Historical data warehouse'],['ربط مباشر مع نظام ERP','مزامنة يومية آلية للبيانات','توحيد البيانات الرئيسية','مستودع للبيانات التاريخية']],
+ph3:['Automation','الأتمتة'],ph3w:['Phase 3 · Q4 2027','المرحلة الثالثة · الربع الرابع 2027'],
+ph3i:[['Intelligent e-mail & mobile notifications','Scheduled report distribution','Configurable alert thresholds','Mobile-optimized access'],['إشعارات ذكية عبر البريد والجوال','توزيع مجدول للتقارير','حدود تنبيه قابلة للتخصيص','وصول محسّن للأجهزة الجوالة']],
+ph4:['Intelligence','الذكاء'],ph4w:['Phase 4 · 2028','المرحلة الرابعة · 2028'],
+ph4i:[['Demand forecasting','Expiry risk prediction','Replenishment recommendations','Natural-language questions to the data'],['التنبؤ بالطلب','التنبؤ بمخاطر انتهاء الصلاحية','توصيات إعادة التزويد','طرح الأسئلة على البيانات باللغة الطبيعية']],
+st_now:['Demonstrated today','معروضة اليوم'],st_plan:['Planned','مخطط لها'],soon:['Soon','قريباً'],
+period_toast:[m=>`Now showing the ${m} report`,m=>`يتم الآن عرض تقرير ${m}`],
+demo_note:['Illustrative data for demonstration purposes','بيانات توضيحية لأغراض العرض'],
+};
+Object.assign(L,{
+s1_k:['Internal Digital Transformation Proposal','مقترح تحول رقمي داخلي'],
+s1_ar:['Pharmaceutical Inventory Intelligence Platform','منصة ذكاء المخزون الدوائي'],
+s1_meta:['Executive Briefing · Sudair Pharma · November 2026','عرض تنفيذي · سدير للأدوية · نوفمبر 2026'],
+s1_start:['Start presentation','ابدأ العرض'],s1_demo:['Launch live platform','تشغيل المنصة التفاعلية'],
+s2_k:['01 · Current situation','01 · الوضع الحالي'],
+s2_t:['Inventory visibility today depends on <span class="gt">monthly reports</span>','الاطلاع على المخزون اليوم يعتمد على <span class="gt">تقارير شهرية</span>'],
+s2_s:['Supply Chain compiles and distributes inventory reports once a month. Every department then works from static files.','تُعِد سلسلة الإمداد تقارير المخزون وتوزعها مرة واحدة شهرياً، ثم تعمل كل إدارة على ملفات ثابتة.'],
+s2_f1:['ERP & warehouse records','سجلات نظام ERP والمستودعات'],s2_f2:['Manual monthly compilation','تجميع يدوي شهري'],s2_f3:['Excel report sent by e-mail','تقرير Excel يُرسل عبر البريد'],s2_f4:['Manual analysis in each department','تحليل يدوي في كل إدارة'],
+s2_lag:['Up to 30 days information lag','فجوة معلومات تصل إلى 30 يوماً'],
+s2_p1t:['Delayed visibility','تأخر في الرؤية'],s2_p1d:['Decisions rely on data that can be weeks old','القرارات تعتمد على بيانات قد يمتد عمرها لأسابيع'],
+s2_p2t:['Fragmented information','معلومات متفرقة'],s2_p2d:['Multiple file versions circulating by e-mail','نسخ متعددة من الملفات متداولة عبر البريد'],
+s2_p3t:['Heavy manual effort','جهد يدوي كبير'],s2_p3d:['Hours spent filtering and rebuilding the same analyses','ساعات تُهدر في التصفية وإعادة بناء التحليلات نفسها'],
+s2_p4t:['Late expiry detection','اكتشاف متأخر لانتهاء الصلاحية'],s2_p4d:['Near-expiry risk surfaces when it is too late to act','مخاطر قرب الانتهاء تظهر بعد فوات وقت التصرف'],
+s2_p5t:['No self-service access','غياب الخدمة الذاتية'],s2_p5d:['Batch-level questions require requests to Supply Chain','الاستفسارات على مستوى التشغيلة تتطلب طلبات إلى سلسلة الإمداد'],
+s2_p6t:['Limited executive view','رؤية تنفيذية محدودة'],s2_p6d:['No consolidated KPIs or trend view for leadership','لا توجد مؤشرات موحّدة أو رؤية للاتجاهات للقيادة'],
+s3_k:['02 · The proposal','02 · المقترح'],
+s3_t:['From static reports to a <span class="gt">living intelligence platform</span>','من تقارير ثابتة إلى <span class="gt">منصة ذكاء حيّة</span>'],
+s3_s:['The same Supply Chain report — uploaded once, validated automatically, and instantly available to every authorized department.','التقرير نفسه من سلسلة الإمداد — يُرفع مرة واحدة، ويُتحقق منه آلياً، ويتاح فوراً لكل إدارة مصرّح لها.'],
+a1:['Supply Chain report','تقرير سلسلة الإمداد'],a1d:['Monthly Excel upload','رفع شهري لملف Excel'],
+a2:['Validation engine','محرك التحقق'],a2d:['Quality checks & column mapping','فحوص الجودة ومطابقة الأعمدة'],
+a3:['Central data hub','مستودع البيانات المركزي'],a3d:['One source of truth','مصدر موحّد للحقيقة'],
+a4:['Intelligence layer','طبقة الذكاء'],a4d:['KPIs, expiry analytics & alerts','المؤشرات وتحليلات الانتهاء والتنبيهات'],
+a5:['Authorized departments','الإدارات المصرّح لها'],a5d:['Secure role-based access','وصول آمن حسب الدور'],
+b1o:['Monthly static files','ملفات شهرية ثابتة'],b1n:['On-demand access','وصول عند الطلب'],
+b2o:['E-mail attachments','مرفقات البريد'],b2n:['Secure central platform','منصة مركزية آمنة'],
+b3o:['Manual analysis','تحليل يدوي'],b3n:['Automated insights','رؤى آلية'],
+b4o:['Reactive decisions','قرارات متأخرة'],b4n:['Proactive early warning','إنذار مبكر استباقي'],
+s4_k:['03 · Capabilities','03 · القدرات'],s4_t:['Everything leaders need, <span class="gt">in one place</span>','كل ما تحتاجه القيادة <span class="gt">في مكان واحد</span>'],
+cap1:['Executive dashboard','لوحة القيادة التنفيذية'],cap1d:['Inventory value, health and risk KPIs at a glance','مؤشرات قيمة المخزون وصحته ومخاطره بنظرة واحدة'],
+cap2:['Inventory explorer','مستكشف المخزون'],cap2d:['Search and filter every item instantly','بحث وتصفية فورية لكل صنف'],
+cap3:['Batch tracking','تتبع التشغيلات'],cap3d:['Full batch traceability and shelf-life view','تتبع كامل للتشغيلات وعرض للعمر المتبقي'],
+cap4:['Expiry risk analytics','تحليلات مخاطر الانتهاء'],cap4d:['Early warning up to 12 months ahead','إنذار مبكر حتى 12 شهراً مقدماً'],
+cap5:['Smart alerts','التنبيهات الذكية'],cap5d:['Rule-based notifications on critical events','إشعارات مبنية على قواعد للأحداث الحرجة'],
+cap6:['Reports on demand','تقارير عند الطلب'],cap6d:['Standard reports exported in seconds','تقارير معتمدة تُصدَّر خلال ثوانٍ'],
+cap7:['Role-based security','أمان حسب الدور'],cap7d:['Department-level access with full audit trail','وصول حسب الإدارة مع سجل تدقيق كامل'],
+cap8:['Fully bilingual','ثنائية اللغة بالكامل'],cap8d:['Complete Arabic and English experience','تجربة كاملة باللغتين العربية والإنجليزية'],
+s5_k:['04 · Live demonstration','04 · عرض حي'],s5_t:['Explore the <span class="gt">platform</span>','استكشف <span class="gt">المنصة</span>'],
+s5_s:['A working prototype built on a representative inventory dataset. Select any module to begin.','نموذج أولي عامل مبني على بيانات مخزون تمثيلية. اختر أي وحدة للبدء.'],
+s5_btn:['Enter the live platform','الدخول إلى المنصة التفاعلية'],
+s6_k:['05 · Value for every department','05 · قيمة لكل إدارة'],s6_t:['One platform, <span class="gt">tailored value</span> across the organization','منصة واحدة و<span class="gt">قيمة مخصّصة</span> على مستوى المنظمة'],
+dv_exec:['Instant view of inventory value, risk and trends for faster decisions','رؤية فورية لقيمة المخزون ومخاطره واتجاهاته لقرارات أسرع'],
+dv_sc:['Less time producing reports, more time optimizing stock','وقت أقل في إعداد التقارير ووقت أكثر في تحسين المخزون'],
+dv_prod:['Visibility of raw and packaging materials to protect production plans','رؤية للمواد الخام ومواد التعبئة لحماية خطط الإنتاج'],
+dv_qa:['Batch status, quarantine and expiry tracking in one view','متابعة حالة التشغيلات والحجر وانتهاء الصلاحية في شاشة واحدة'],
+dv_sales:['Know what is available and what must move first','معرفة المتاح وما يجب تصريفه أولاً'],
+dv_fin:['Accurate inventory valuation and write-off exposure','تقييم دقيق للمخزون ومعرفة حجم مخاطر الشطب'],
+dv_reg:['Faster batch traceability for regulatory and recall requests','تتبع أسرع للتشغيلات لمتطلبات الجهات التنظيمية وحالات الاستدعاء'],
+dv_it:['A secure, governed and scalable data foundation','أساس بيانات آمن ومحوكم وقابل للتوسع'],
+s7_k:['06 · Expected impact','06 · الأثر المتوقع'],s7_t:['Measurable impact <span class="gt">from day one</span>','أثر ملموس وقابل للقياس <span class="gt">من اليوم الأول</span>'],
+v1:['single source of truth for inventory data','مصدر موحّد لبيانات المخزون'],
+v2:['less time spent compiling and analyzing reports','تقليل الوقت المستغرق في إعداد التقارير وتحليلها'],
+v3:['days of early warning before expiry','يوماً من الإنذار المبكر قبل انتهاء الصلاحية'],
+v4:['batch-level traceability across reports','تتبع كامل على مستوى التشغيلة عبر التقارير'],
+v5:['departments with secure self-service access','إدارات بوصول ذاتي آمن'],
+v6n:['< 1 min','< دقيقة'],v6:['to generate any standard report','لإنشاء أي تقرير معتمد'],
+s7_note:['Indicative targets — to be baselined and validated during the pilot phase','مستهدفات استرشادية — يُحدد خط الأساس لها ويُتحقق منها خلال المرحلة التجريبية'],
+s8_k:['07 · Roadmap','07 · خارطة الطريق'],s8_t:['A phased path to <span class="gt">intelligent inventory</span>','مسار مرحلي نحو <span class="gt">مخزون ذكي</span>'],
+s9_k:['08 · Implementation','08 · التنفيذ'],s9_t:['Phase 1 pilot: <span class="gt">live in 12 weeks</span>','المرحلة التجريبية الأولى: <span class="gt">تشغيل خلال 12 أسبوعاً</span>'],
+gt1:['Requirements & data mapping','المتطلبات ومطابقة البيانات'],gt2:['Platform configuration & build','تهيئة المنصة وبناؤها'],gt3:['Data validation with Supply Chain','التحقق من البيانات مع سلسلة الإمداد'],gt4:['User acceptance testing','اختبار قبول المستخدمين'],gt5:['Training & go-live','التدريب والإطلاق'],
+wk:['W','أ'],weeks_lbl:['Weeks','الأسابيع'],
+s9_n:['What the pilot requires','متطلبات المرحلة التجريبية'],
+n1:['A Supply Chain data owner for monthly uploads','مسؤول بيانات من سلسلة الإمداد للرفع الشهري'],n2:['An IT counterpart for hosting & security','ممثل من تقنية المعلومات للاستضافة والأمن'],n3:['Pilot users from 3–4 departments','مستخدمون تجريبيون من 3–4 إدارات'],n4:['Agreed KPI definitions & alert thresholds','تعريفات متفق عليها للمؤشرات وحدود التنبيه'],n5:['No change to current ERP or reporting process','دون أي تغيير على نظام ERP أو آلية التقارير الحالية'],
+s10_k:['09 · Decision requested','09 · القرار المطلوب'],s10_t:['Proposed <span class="gt">next steps</span>','الخطوات <span class="gt">التالية المقترحة</span>'],
+d1:['Approve the Phase 1 pilot of PharmaStock Intelligence','اعتماد المرحلة التجريبية الأولى لمنصة PharmaStock Intelligence'],d2:['Nominate the Supply Chain data owner and IT counterpart','تسمية مسؤول البيانات من سلسلة الإمداد وممثل تقنية المعلومات'],d3:['Confirm pilot departments and access levels','تحديد الإدارات المشاركة في التجربة ومستويات الوصول'],d4:['Review pilot results after 12 weeks to decide on Phase 2','مراجعة نتائج التجربة بعد 12 أسبوعاً لاتخاذ قرار المرحلة الثانية'],
+gl_t:['Phase 1 at a glance','المرحلة الأولى في لمحة'],gl1:['Duration','المدة'],gl1v:['12 weeks','12 أسبوعاً'],gl2:['Data source','مصدر البيانات'],gl2v:['Existing monthly report','التقرير الشهري الحالي'],gl3:['Pilot users','المستخدمون التجريبيون'],gl3v:['3–4 departments','3–4 إدارات'],gl4:['ERP changes','تغييرات ERP'],gl4v:['None required','لا يلزم أي تغيير'],gl5:['Languages','اللغات'],gl5v:['Arabic & English','العربية والإنجليزية'],
+s11_t:['Thank you','شكراً لكم'],s11_s:['Questions & discussion','الأسئلة والنقاش'],
+d_prev:['Previous slide','الشريحة السابقة'],d_next:['Next slide','الشريحة التالية'],
+keys_hint:['← → to navigate · F for full screen','الأسهم للتنقل · F لملء الشاشة'],
+});
+/* ================= CORE ================= */
+const S={lang:'en',theme:'light',view:'deck',slide:0,mod:'dashboard',period:0,
+  inv:{q:'',cat:'all',wh:'all',type:'all',st:'all',sort:'value',dir:-1,page:1},
+  prod:'SP-FG-2001',prodQ:'',openB:null,alertF:'all',riskF:'all',read:false,
+  up:{stage:'idle',step:0,file:''},hist:null,perms:null};
+const LI=()=>S.lang==='ar'?1:0;
+function t(k,...a){const e=L[k];if(!e)return k;const v=e[LI()];return typeof v==='function'?v(...a):v}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+const ICONS={
+grid:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+package:'<path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>',
+search:'<circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.35-4.35"/>',
+clock:'<circle cx="12" cy="12" r="9.5"/><polyline points="12 6.5 12 12 15.5 14"/>',
+chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-6"/>',
+bars:'<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="15"/>',
+upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+bell:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>',
+flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+moon:'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+sun:'<circle cx="12" cy="12" r="4.5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>',
+max:'<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>',
+monitor:'<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+arrowR:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+arrowL:'<line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>',
+chevR:'<polyline points="9 18 15 12 9 6"/>',chevD:'<polyline points="6 9 12 15 18 9"/>',chevL:'<polyline points="15 18 9 12 15 6"/>',
+alert:'<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+check:'<polyline points="20 6 9 17 4 12"/>',x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+up:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+layers:'<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+db:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+spark:'<path d="M12 3l1.9 5.8L20 10.7l-5.8 1.9L12 18.5l-1.9-5.9L4.2 10.7l5.9-1.9z"/><path d="M19 3v4M17 5h4"/>',
+thermo:'<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',
+building:'<path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>',
+link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+mail:'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/>',
+target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+pill:'<path d="M10.5 20.5 3.5 13.5a4.95 4.95 0 1 1 7-7l7 7a4.95 4.95 0 1 1-7 7z"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/>',
+activity:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+play:'<polygon points="6 4 20 12 6 20 6 4"/>',
+wallet:'<path d="M20 7H5a2 2 0 0 1 0-4h13v4"/><path d="M3 5v14a2 2 0 0 0 2 2h15V7"/><circle cx="16" cy="14" r="1.5"/>',
+box:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/>',
+trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
+truck:'<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+flask:'<path d="M9 2h6M10 2v6.5L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 8.5V2"/><path d="M7 15h10"/>',
+cog:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+refresh:'<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>',
+lang:'<path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/>',
+info:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+};
+const icon=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||''}</svg>`;
+const LOGO=`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V11"/><path d="M9.5 19V7"/><path d="M15 19v-5"/><path d="M20 19V4"/><circle cx="20" cy="4" r=".6" fill="#fff"/></svg>`;
+
+/* ---------- formatting ---------- */
+const MON={en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],ar:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر']};
+const MONL={en:['January','February','March','April','May','June','July','August','September','October','November','December'],ar:MON.ar};
+const fN=(v,d=0)=>Number(v).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
+function money(v){const ar=LI();let s;const a=Math.abs(v);
+  if(a>=1e6)s=fN(v/1e6,a>=1e7?1:2)+(ar?' مليون':'M');else if(a>=1e3)s=fN(v/1e3,0)+(ar?' ألف':'K');else s=fN(v);
+  return ar?`${s} ر.س`:`SAR ${s}`}
+const fD=d=>`${d.getDate()} ${MON[S.lang][d.getMonth()]} ${d.getFullYear()}`;
+const fM=d=>`${MON[S.lang][d.getMonth()]} ${String(d.getFullYear()).slice(2)}`;
+const fML=d=>`${MONL[S.lang][d.getMonth()]} ${d.getFullYear()}`;
+const pct=(a,b)=>b?((a-b)/b*100):0;
+
+/* ---------- reference data ---------- */
+const CATS=[['an','#0FB5AE'],['ab','#2F6BFF'],['cv','#7C5CFF'],['db','#F59E0B'],['gi','#06AED4'],['rs','#12B76A'],['vt','#EE46BC'],['dm','#F97316'],['api','#4F46E5'],['pk','#64748B']];
+const CC=Object.fromEntries(CATS);
+const WHS=[['FG','#2F6BFF'],['RM','#7C5CFF'],['CC','#06AED4'],['PK','#64748B'],['QA','#F04438']];
+const STC={healthy:['var(--ok)','t-ok'],low:['var(--warn)','t-warn'],over:['var(--violet)','t-violet'],out:['var(--danger)','t-danger']};
+const BSC={rel:'t-ok',quar:'t-warn',hold:'t-violet',blocked:'t-danger'};
+const BK=[['exp','#F04438'],['b90','#F97316'],['b180','#F59E0B'],['b365','#2F6BFF'],['more','#0FB5AE']];
+const PD=[
+['SP-FG-1001','Paracetamol 500 mg Tablets ×24','باراسيتامول 500 ملغ أقراص ×24','an','FG','FG',4.2,42000],
+['SP-FG-1002','Ibuprofen 400 mg Tablets ×30','إيبوبروفين 400 ملغ أقراص ×30','an','FG','FG',6.8,18000],
+['SP-FG-1003','Diclofenac Sodium 50 mg Tablets ×20','ديكلوفيناك الصوديوم 50 ملغ أقراص ×20','an','FG','FG',7.5,12000],
+['SP-FG-1004','Paracetamol 120 mg/5 mL Syrup 100 mL','باراسيتامول 120 ملغ/5 مل شراب 100 مل','an','FG','FG',5.9,15000,'low'],
+['SP-FG-2001','Amoxicillin 500 mg Capsules ×21','أموكسيسيلين 500 ملغ كبسولات ×21','ab','FG','FG',9.4,16000],
+['SP-FG-2002','Amoxicillin/Clavulanate 1 g Tablets ×14','أموكسيسيلين/كلافولانات 1 غ أقراص ×14','ab','FG','FG',18.5,11000],
+['SP-FG-2003','Azithromycin 250 mg Tablets ×6','أزيثرومايسين 250 ملغ أقراص ×6','ab','FG','FG',14.2,9000,'low'],
+['SP-FG-2004','Ceftriaxone 1 g Vial for Injection','سيفترياكسون 1 غ قارورة حقن','ab','FG','FG',11.8,8000],
+['SP-FG-2005','Cefuroxime 500 mg Tablets ×10','سيفوروكسيم 500 ملغ أقراص ×10','ab','FG','FG',16,7000],
+['SP-FG-3001','Atorvastatin 20 mg Tablets ×30','أتورفاستاتين 20 ملغ أقراص ×30','cv','FG','FG',12.4,14000],
+['SP-FG-3002','Amlodipine 5 mg Tablets ×30','أملوديبين 5 ملغ أقراص ×30','cv','FG','FG',6.1,13000,'over'],
+['SP-FG-3003','Losartan 50 mg Tablets ×30','لوسارتان 50 ملغ أقراص ×30','cv','FG','FG',9.8,10000],
+['SP-FG-3004','Clopidogrel 75 mg Tablets ×28','كلوبيدوقريل 75 ملغ أقراص ×28','cv','FG','FG',15.3,8000],
+['SP-FG-4001','Metformin 850 mg Tablets ×30','ميتفورمين 850 ملغ أقراص ×30','db','FG','FG',5.2,26000],
+['SP-FG-4002','Gliclazide MR 30 mg Tablets ×30','جليكلازيد ممتد المفعول 30 ملغ أقراص ×30','db','FG','FG',8.9,11000],
+['SP-FG-4003','Insulin Glargine 100 IU/mL Pen','إنسولين جلارجين 100 وحدة/مل قلم','db','FG','CC',38,4000,'low'],
+['SP-FG-5001','Omeprazole 20 mg Capsules ×28','أوميبرازول 20 ملغ كبسولات ×28','gi','FG','FG',7.9,17000],
+['SP-FG-5002','Esomeprazole 40 mg Tablets ×14','إيزوميبرازول 40 ملغ أقراص ×14','gi','FG','FG',13.6,9500],
+['SP-FG-5003','Pantoprazole 40 mg IV Vial','بانتوبرازول 40 ملغ قارورة وريدية','gi','FG','FG',17.2,5000,'out'],
+['SP-FG-6001','Salbutamol 100 mcg Inhaler','سالبيوتامول 100 مكغ بخاخ استنشاق','rs','FG','FG',12.9,9000],
+['SP-FG-6002','Montelukast 10 mg Tablets ×30','مونتيلوكاست 10 ملغ أقراص ×30','rs','FG','FG',14.8,7000],
+['SP-FG-6003','Cetirizine 5 mg/5 mL Syrup 120 mL','سيتيريزين 5 ملغ/5 مل شراب 120 مل','rs','FG','FG',6.4,8000],
+['SP-FG-7001','Vitamin D3 50,000 IU Capsules ×4','فيتامين د3 50,000 وحدة كبسولات ×4','vt','FG','FG',10.5,12000],
+['SP-FG-7002','Ferrous Sulfate + Folic Acid Tablets ×30','كبريتات الحديدوز + حمض الفوليك أقراص ×30','vt','FG','FG',4.8,9000,'over'],
+['SP-FG-8001','Fusidic Acid 2% Cream 15 g','حمض الفيوسيديك 2% كريم 15 غ','dm','FG','FG',8.7,7500],
+['SP-FG-8002','Diclofenac 1% Gel 50 g','ديكلوفيناك 1% جل 50 غ','dm','FG','FG',9.9,6500],
+['SP-RM-0101','Paracetamol API','باراسيتامول (مادة فعالة)','api','RM','RM',38,2100],
+['SP-RM-0102','Amoxicillin Trihydrate API','أموكسيسيلين ثلاثي الهيدرات (مادة فعالة)','api','RM','RM',165,600],
+['SP-RM-0103','Metformin HCl API','ميتفورمين هيدروكلوريد (مادة فعالة)','api','RM','RM',42,1500,'low'],
+['SP-RM-0104','Atorvastatin Calcium API','أتورفاستاتين الكالسيوم (مادة فعالة)','api','RM','RM',920,60],
+['SP-RM-0105','Microcrystalline Cellulose (Excipient)','سليلوز دقيق التبلور (سواغ)','api','RM','RM',9.5,3000],
+['SP-PM-0201','PVC/Alu Blister Foil Roll','لفة رقائق بليستر PVC/ألمنيوم','pk','PM','PK',210,300,'over'],
+['SP-PM-0202','Printed Cartons – Paracetamol 500 mg','علب كرتون مطبوعة – باراسيتامول 500 ملغ','pk','PM','PK',.35,45000],
+['SP-PM-0203','Amber Glass Bottles 100 mL','زجاجات زجاجية كهرمانية 100 مل','pk','PM','PK',.9,20000],
+];
+const REPORTS=[[2026,9,31,[2026,10,2]],[2026,8,30,[2026,9,1]],[2026,7,31,[2026,8,2]],[2026,6,31,[2026,7,3]],[2026,5,30,[2026,6,2]]].map(([y,m,d,u])=>({date:new Date(y,m,d),up:new Date(u[0],u[1],u[2])}));
+const DAY=864e5;
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let x=Math.imul(seed^seed>>>15,1|seed);x=x+Math.imul(x^x>>>7,61|x)^x;return((x^x>>>14)>>>0)/4294967296}}
+const bucket=d=>d<0?'exp':d<=90?'b90':d<=180?'b180':d<=365?'b365':'more';
+
+function gen(pi){
+  const R=REPORTS[pi],r=rng(9001+pi*7919),rd=R.date.getTime();let seq=1180-pi*41;
+  const products=PD.map(d=>{
+    const [code,en,ar,cat,type,wh,cost,u0,prof]=d,usage=u0*(type==='FG'?3:1.5);
+    const cover=prof==='out'?0:prof==='low'?.35+r()*.5:prof==='over'?9+r()*3:1.7+r()*4.6;
+    const total=Math.round(usage*cover),n=total?2+Math.floor(r()*3):0;
+    const ws=[...Array(n)].map(()=>.4+r()),wsum=ws.reduce((a,b)=>a+b,0);
+    const batches=ws.map(w=>{
+      const x=r();let dte=x<.035?-(5+Math.floor(r()*80)):x<.11?8+Math.floor(r()*82):x<.22?91+Math.floor(r()*89):x<.42?181+Math.floor(r()*184):366+Math.floor(r()*520);
+      const shelf=type==='FG'?(r()<.5?730:1095):type==='RM'?1095:1460;
+      if(dte>shelf-40)dte=shelf-40-Math.floor(r()*120);
+      const exp=new Date(rd+dte*DAY),mfg=new Date(exp.getTime()-shelf*DAY),qty=Math.max(10,Math.round(total*w/wsum/10)*10);
+      const st=dte<0?'blocked':r()<.07?'quar':r()<.04?'hold':'rel';
+      return{id:`${type==='FG'?'B':type==='RM'?'R':'P'}${String(mfg.getFullYear()).slice(2)}-${String(seq++).padStart(4,'0')}`,mfg,exp,dte,qty,st,loc:(st==='quar'||st==='blocked')?'QA':wh,value:qty*cost}
+    }).sort((a,b)=>a.dte-b.dte);
+    const qty=batches.filter(b=>b.st!=='blocked').reduce((a,b)=>a+b.qty,0);
+    const c=qty/usage,status=qty===0?'out':c<1?'low':c>8?'over':'healthy';
+    const live=batches.filter(b=>b.dte>=0);
+    return{code,name:{en,ar},cat,type,wh,cost,usage,batches,qty,cover:c,status,value:batches.reduce((a,b)=>a+b.value,0),nexp:live.length?live[0]:null}
+  });
+  const A={total:0,skus:0,batches:0,near:0,nearN:0,bk:{},bkN:{},cat:{},catN:{},nearCat:{},wh:{},st:{healthy:0,low:0,over:0,out:0},quarN:0,quarV:0,heat:{}};
+  BK.forEach(([k])=>{A.bk[k]=0;A.bkN[k]=0});WHS.forEach(([k])=>A.wh[k]=0);CATS.forEach(([k])=>{A.cat[k]=0;A.catN[k]=0;A.nearCat[k]=0;A.heat[k]=Array(12).fill(0)});
+  products.forEach(p=>{A.total+=p.value;if(p.qty>0)A.skus++;A.cat[p.cat]+=p.value;A.catN[p.cat]++;A.st[p.status]++;
+    p.batches.forEach(b=>{if(b.st!=='blocked')A.batches++;A.wh[b.loc]+=b.value;const k=bucket(b.dte);A.bk[k]+=b.value;A.bkN[k]++;
+      if(b.dte>=0&&b.dte<=180){A.near+=b.value;A.nearN++;A.nearCat[p.cat]+=b.value}
+      if(b.st==='quar'){A.quarN++;A.quarV+=b.value}
+      const mi=(b.exp.getFullYear()-R.date.getFullYear())*12+b.exp.getMonth()-R.date.getMonth();if(mi>=1&&mi<=12)A.heat[p.cat][mi-1]+=b.value})});
+  // alerts
+  const al=[];
+  products.forEach(p=>{
+    if(p.status==='out')al.push({sev:'critical',k:'out',p});
+    p.batches.forEach(b=>{if(b.dte<0)al.push({sev:'critical',k:'exp',p,b});else if(b.dte<=90)al.push({sev:'high',k:'soon',p,b});if(b.st==='quar')al.push({sev:'info',k:'quar',p,b})});
+    if(p.status==='low')al.push({sev:'medium',k:'low',p});if(p.status==='over')al.push({sev:'info',k:'over',p});
+  });
+  const so={critical:0,high:1,medium:2,info:3};al.sort((a,b)=>so[a.sev]-so[b.sev]||((a.b?a.b.dte:0)-(b.b?b.b.dte:0)));
+  return{R,products,A,alerts:al};
+}
+const DS=REPORTS.map((_,i)=>gen(i));
+// trends & histories (consistent across periods)
+DS.forEach((D,pi)=>{
+  const r=rng(77+pi),prev=DS[pi+1];
+  D.trend=[...Array(12)].map((_,i)=>D.A.total*(.83+.15*i/11+(r()-.5)*.05));D.trend[11]=D.A.total;if(prev)D.trend[10]=prev.A.total;
+  D.ntrend=[...Array(12)].map((_,i)=>D.A.near*(.7+.3*r()));D.ntrend[11]=D.A.near;if(prev)D.ntrend[10]=prev.A.near;
+  D.labels=[...Array(12)].map((_,i)=>new Date(D.R.date.getFullYear(),D.R.date.getMonth()-11+i,1));
+  D.products.forEach((p,j)=>{const h=[...Array(6)].map(()=>p.usage*(1.5+r()*4));h[5]=p.qty;if(prev)h[4]=prev.products[j].qty;p.hist=h});
+});
+const data=()=>DS[S.period],prevD=()=>DS[S.period+1];
+const pn=p=>p.name[S.lang];
+const uom=p=>t('uom_'+p.type);
+
+/* ---------- charts ---------- */
+let UID=0;
+function niceMax(v){if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v))),n=v/p;return(n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p}
+function smooth(p){let d=`M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;for(let i=1;i<p.length;i++){const[x0,y0]=p[i-1],[x1,y1]=p[i],cx=(x0+x1)/2;d+=` C${cx.toFixed(1)},${y0.toFixed(1)} ${cx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`}return d}
+function lineChart({labels,series,w=680,h=250,fmt=v=>v,refs=[],pl=64}){
+  const rtl=LI(),id='lg'+(UID++),pr=14,pt=14,pb=30,iw=w-pl-pr,ih=h-pt-pb,n=labels.length;
+  const mx=niceMax(Math.max(...series.flatMap(s=>s.vals),...refs.map(r=>r.v))*1.08);
+  const X=i=>{const x=pl+(n<2?iw/2:iw*i/(n-1));return rtl?w-x:x},Y=v=>pt+ih-v/mx*ih;
+  let defs='',g='';
+  for(let k=0;k<=4;k++){const v=mx*k/4,y=Y(v);g+=`<line class="gl" x1="${rtl?pr:pl}" x2="${rtl?w-pl:w-pr}" y1="${y}" y2="${y}"/><text class="ax" x="${rtl?w-pl+10:pl-10}" y="${y+4}" text-anchor="end">${fmt(v)}</text>`}
+  labels.forEach((l,i)=>{if(n>8&&i%2&&i!==n-1)return;g+=`<text class="ax" x="${X(i)}" y="${h-8}" text-anchor="middle">${l}</text>`});
+  series.forEach((s,si)=>{const pts=s.vals.map((v,i)=>[X(i),Y(v)]),d=smooth(pts);
+    if(s.area){defs+=`<linearGradient id="${id}${si}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.color}" stop-opacity=".28"/><stop offset="1" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
+      g+=`<path d="${d} L${pts[n-1][0]},${Y(0)} L${pts[0][0]},${Y(0)} Z" fill="url(#${id}${si})"/>`}
+    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.6" stroke-linecap="round" ${s.dash?'stroke-dasharray="6 6"':''}/>`;
+    const lp=pts[n-1];g+=`<circle cx="${lp[0]}" cy="${lp[1]}" r="5" fill="${s.color}" stroke="var(--surface)" stroke-width="2.5"/>`});
+  refs.forEach(r=>{const y=Y(r.v);g+=`<line x1="${rtl?pr:pl}" x2="${rtl?w-pl:w-pr}" y1="${y}" y2="${y}" stroke="${r.color}" stroke-width="1.5" stroke-dasharray="5 4"/><text class="ax" x="${rtl?pr+4:w-pr-4}" y="${y-6}" text-anchor="end" style="fill:${r.color};font-weight:600">${r.label}</text>`});
+  const cw=iw/Math.max(1,n-1);
+  labels.forEach((l,i)=>{const tip=`<b>${l}</b>`+series.map(s=>`<div><i style="background:${s.color}"></i>${s.name}: <b>${fmt(s.vals[i],1)}</b></div>`).join('');
+    g+=`<rect class="hz" x="${X(i)-cw/2}" y="${pt}" width="${cw}" height="${ih}" data-tip="${esc(tip)}"/><g class="hd"><line class="vl" x1="${X(i)}" x2="${X(i)}" y1="${pt}" y2="${pt+ih}"/>${series.map(s=>`<circle cx="${X(i)}" cy="${Y(s.vals[i])}" r="5" fill="${s.color}" stroke="var(--surface)" stroke-width="2"/>`).join('')}</g>`});
+  return`<svg class="lc" viewBox="0 0 ${w} ${h}" ${rtl?'direction="rtl"':''}><defs>${defs}</defs>${g}</svg>`;
+}
+function spark(vals,color){const w=84,h=30,rtl=LI(),mx=Math.max(...vals),mn=Math.min(...vals),n=vals.length;
+  const pts=vals.map((v,i)=>{const x=i/(n-1)*w;return[rtl?w-x:x,h-3-(v-mn)/((mx-mn)||1)*(h-6)]});
+  return`<svg class="spark" viewBox="0 0 ${w} ${h}"><path d="${smooth(pts)}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"/></svg>`}
+function hbars(items,fmt=money){const mx=Math.max(...items.map(i=>i.value))||1,tot=items.reduce((a,b)=>a+b.value,0)||1;
+  return`<div class="hb">${items.map(it=>`<div class="hb-row" data-tip="${esc(`<b>${it.label}</b><div>${fmt(it.value)} · ${fN(it.value/tot*100,1)}%</div>`)}"><div class="hb-l" title="${esc(it.label)}">${it.label}</div><div class="hb-t"><div class="hb-f" style="width:${Math.max(1.5,it.value/mx*100)}%;background:${it.color}"></div></div><div class="hb-v">${fmt(it.value)}</div></div>`).join('')}</div>`}
+function vbars(items,{fmt=money,band}={}){const mx=niceMax(Math.max(...items.map(i=>i.value),band?band[1]:0)*1.1);
+  const bandH=band?`<div class="band" style="bottom:${band[0]/mx*100}%;height:${(band[1]-band[0])/mx*100}%" data-tip="${esc(band[2])}"></div>`:'';
+  return`<div class="vb">${bandH}${items.map(it=>`<div class="vb-c" data-tip="${esc(`<b>${it.label}</b><div>${fmt(it.value)}${it.sub?' · '+it.sub:''}</div>`)}"><div class="vb-v">${it.short||fmt(it.value)}</div><div class="vb-b" style="height:${Math.max(1,it.value/mx*100)}%;background:${it.color}"></div></div>`).join('')}</div><div class="vb-x">${items.map(it=>`<div>${it.label}${it.sub?`<small>${it.sub}</small>`:''}</div>`).join('')}</div>`}
+function donut(items,center,sub,size=176){const tot=items.reduce((a,b)=>a+b.value,0)||1,sw=22,r=(size-sw)/2-4,C=2*Math.PI*r;let off=0;
+  const segs=items.filter(i=>i.value>0).map(it=>{const len=it.value/tot*C,gap=items.length>1?2:0;const s=`<circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${it.color}" stroke-width="${sw}" stroke-dasharray="${Math.max(0,len-gap)} ${C}" stroke-dashoffset="${-off}" data-tip="${esc(`<b>${it.label}</b><div>${it.fmt||it.value} · ${fN(it.value/tot*100,0)}%</div>`)}" style="cursor:pointer"/>`;off+=len;return s}).join('');
+  return`<div class="donut-w"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="flex:none"><g transform="rotate(-90 ${size/2} ${size/2})"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="${sw}"/>${segs}</g><text x="50%" y="47%" text-anchor="middle" style="font-size:28px;font-weight:700;fill:var(--text)">${center}</text><text x="50%" y="62%" text-anchor="middle" style="font-size:11.5px;fill:var(--muted)">${sub}</text></svg><div class="dl">${items.map(it=>`<div><i style="background:${it.color}"></i>${it.label}<b>${it.fmt||it.value}</b></div>`).join('')}</div></div>`}
+/* ================= SHELL ================= */
+const NAV=[['g_overview',[['dashboard','grid']]],['g_inventory',[['inventory','package'],['tracking','layers'],['expiry','clock']]],['g_intel',[['analytics','chart'],['alerts','bell']]],['g_data',[['upload','upload'],['reports','file']]],['g_admin',[['access','shield'],['roadmap','flag']]]];
+const MODICON=Object.fromEntries(NAV.flatMap(g=>g[1]));
+const unread=()=>S.read?0:data().alerts.filter(a=>a.sev==='critical'||a.sev==='high').length;
+
+function renderTop(){
+  const app=S.view==='app',D=data();
+  $('#topbar').innerHTML=`
+  <div class="logo"><div class="logo-mark">${LOGO}</div><div><div class="logo-name">PharmaStock <span>Intelligence</span></div><div class="logo-sub">${t('brand_sub')}</div></div></div>
+  <div class="top-mid">
+    <div class="seg"><button class="${!app?'on':''}" data-act="view" data-v="deck">${icon('monitor')}<span>${t('view_deck')}</span></button><button class="${app?'on':''}" data-act="view" data-v="app">${icon('grid')}<span>${t('view_app')}</span></button></div>
+    ${app?`<div class="gsearch">${icon('search')}<input id="gsearch" autocomplete="off" placeholder="${t('search_ph')}"><div class="dd" id="gsdd"></div></div>`:''}
+  </div>
+  <div class="top-r">
+    ${app?`<label class="period-wrap"><span>${t('report_period')}</span><select class="period" id="period">${REPORTS.slice(0,3).map((r,i)=>`<option value="${i}" ${i===S.period?'selected':''}>${fML(r.date)}</option>`).join('')}</select></label>
+    <div style="position:relative"><button class="ibtn" data-act="bell" title="${t('notifications')}">${icon('bell')}${unread()?`<span class="dot">${unread()}</span>`:''}</button><div class="dd bell-dd" id="belldd"></div></div>`:''}
+    <div class="lang" title="Language / اللغة"><button class="${S.lang==='en'?'on':''}" data-act="lang" data-l="en">${icon('globe')}EN</button><button class="ar ${S.lang==='ar'?'on':''}" data-act="lang" data-l="ar">العربية</button></div>
+    <button class="ibtn" data-act="theme" title="${t('theme')}">${icon(S.theme==='dark'?'sun':'moon')}</button>
+    <button class="ibtn" data-act="fs" title="${t('fullscreen')}">${icon('max')}</button>
+    ${app?`<div class="user"><div class="avatar">${LI()?'م ت':'EV'}</div><div><b>${t('user_name')}</b><small>${t('user_role')}</small></div></div>`:''}
+  </div>`;
+}
+function renderSide(){
+  const D=data(),n=D.alerts.length;
+  $('#sidebar').innerHTML=NAV.map(([g,items])=>`<div class="nav-g">${t(g)}</div>`+items.map(([m,ic])=>`<button class="nav-i ${S.mod===m?'on':''}" data-act="mod" data-m="${m}">${icon(ic)}<span>${t('m_'+m)}</span>${m==='alerts'&&unread()?`<span class="cnt">${unread()}</span>`:''}</button>`).join('')).join('')+
+  `<div class="src" style="margin-top:22px"><b><span class="live"></span>${t('src_title')}</b><div style="margin-top:6px">${t('src_desc')}</div><div style="margin-top:8px;display:flex;justify-content:space-between;gap:8px"><span>${t('report_period')}</span><b style="font-size:12px">${fML(D.R.date)}</b></div><div style="display:flex;justify-content:space-between;gap:8px"><span>${t('src_sync')}</span><b style="font-size:12px">${fD(D.R.up)}</b></div></div>
+  <button class="back" data-act="view" data-v="deck">${icon('arrowL','flip')}${t('back_deck')}</button>`;
+}
+function pageHead(m,sub,actions=''){return`<div class="ph"><div><div class="crumb">${icon(MODICON[m],'')} PharmaStock ${icon('chevR','flip')} ${t('m_'+m)}</div><h1>${t('m_'+m)}</h1><p>${sub}</p></div><div class="ph-act">${actions}</div></div>`}
+const srcBadge=()=>{const D=data();return`<div class="badge-src"><span class="live"></span>${t('src_desc')} · <b>${fML(D.R.date)}</b></div>`};
+const stPill=s=>`<span class="pill ${STC[s][1]}">${t('st_'+s)}</span>`;
+const bsPill=s=>`<span class="pill ${BSC[s]}">${t('bs_'+s)}</span>`;
+const daysTxt=d=>d<0?t('exp_ago',-d):t('days',d);
+const dteColor=d=>d<0?'var(--danger)':d<=90?'#F97316':d<=180?'var(--warn)':d<=365?'var(--brand-2)':'var(--ok)';
+const delta=(v,goodUp=true)=>{const up=v>=0,good=up===goodUp;return`<span class="delta ${good?'good':'bad'}"><bdi>${up?'▲':'▼'} ${fN(Math.abs(v),1)}%</bdi></span>`};
+
+/* ---------- DASHBOARD ---------- */
+function vDashboard(){
+  const D=data(),A=D.A,P=prevD().A;
+  const kp=[
+    ['kpi_value',money(A.total),delta(pct(A.total,P.total)),t('vs_prev'),'wallet','t-brand',D.trend,'#0FB5AE'],
+    ['kpi_skus',fN(A.skus),'',t('of_n',D.products.length),'package','t-blue',null],
+    ['kpi_batches',fN(A.batches),delta(pct(A.batches,P.batches)),t('in_locs'),'layers','t-violet',null],
+    ['kpi_near',money(A.near),delta(pct(A.near,P.near),false),`${fN(A.near/A.total*100,1)}% ${t('of_total')}`,'clock','t-warn',D.ntrend,'#F59E0B'],
+    ['kpi_expired',money(A.bk.exp),delta(pct(A.bk.exp,P.bk.exp||1),false),t('n_batches',A.bkN.exp),'alert','t-danger',null],
+    ['kpi_low',fN(A.st.low+A.st.out),'',t('n_out',A.st.out),'activity','t-violet',null]];
+  const kpis=kp.map(([k,v,d,s,ic,tc,sp,sc])=>`<div class="card kpi">${sp?spark(sp,sc):''}<div class="kpi-top"><div class="kpi-ic ${tc}">${icon(ic)}</div></div><div class="kpi-l">${t(k)}</div><div class="kpi-v tnum">${v}</div><div class="kpi-f">${d}<span>${s}</span></div></div>`).join('');
+  const cats=CATS.map(([k,c])=>({label:t('cat_'+k),value:A.cat[k],color:c})).sort((a,b)=>b.value-a.value);
+  const bks=BK.map(([k,c])=>({label:t('bk_'+k),value:A.bk[k],color:c,sub:t('n_batches',A.bkN[k])}));
+  const st=['healthy','low','over','out'].map(s=>({label:t('st_'+s),value:A.st[s],color:STC[s][0],fmt:fN(A.st[s])}));
+  const near=D.products.flatMap(p=>p.batches.filter(b=>b.dte>=0&&b.dte<=180).map(b=>({p,b}))).sort((a,b)=>a.b.dte-b.b.dte).slice(0,6);
+  return`<div class="page">${pageHead('dashboard',t('dash_s'),srcBadge()+`<button class="btn" data-act="rpPrev" data-r="r6">${icon('file')}${t('r6')}</button>`)}
+  <div class="grid g-kpi">${kpis}</div>
+  <div class="grid g-21">
+    <div class="card"><div class="ch"><div><h3>${t('ch_trend')}</h3><p>${t('ch_trend_s')}</p></div><div class="legend"><span><i style="background:#0FB5AE"></i>${t('total_value')}</span><span><i style="background:#F59E0B"></i>${t('near_value')}</span></div></div>
+      ${lineChart({labels:D.labels.map(fM),series:[{name:t('total_value'),vals:D.trend,color:'#0FB5AE',area:1},{name:t('near_value'),vals:D.ntrend,color:'#F59E0B',area:1}],fmt:money,h:270})}</div>
+    <div class="card"><div class="ch"><div><h3>${t('ch_cat')}</h3><p>${t('ch_cat_s')}</p></div></div>${hbars(cats)}</div>
+  </div>
+  <div class="grid g-3">
+    <div class="card"><div class="ch"><div><h3>${t('ch_expiry')}</h3><p>${t('ch_expiry_s')}</p></div><button class="btn sm" data-act="mod" data-m="expiry">${icon('arrowR','flip')}</button></div>${vbars(bks)}</div>
+    <div class="card"><div class="ch"><div><h3>${t('ch_health')}</h3><p>${t('ch_health_s')}</p></div></div>${donut(st,fN(D.products.length),t('items_lbl'))}</div>
+    <div class="card ai-card"><div class="ch"><div><h3 class="row">${icon('spark')} ${t('ch_ins')}</h3><p>${t('ch_ins_s')}</p></div></div><div class="ins">${insights().slice(0,4).map(([ic,tc,txt])=>`<div class="ins-i"><div class="kpi-ic ${tc}">${icon(ic)}</div><div>${txt}</div></div>`).join('')}</div></div>
+  </div>
+  <div class="grid g-21">
+    <div class="card"><div class="ch"><div><h3>${t('tbl_near')}</h3><p>${t('tbl_near_s')}</p></div><button class="btn sm" data-act="mod" data-m="expiry">${t('m_expiry')} ${icon('arrowR','flip')}</button></div>
+      <div class="tw"><table class="tbl"><thead><tr><th>${t('c_product')}</th><th>${t('c_batch')}</th><th>${t('c_exp')}</th><th>${t('c_life')}</th><th class="num">${t('c_qty')}</th><th class="num">${t('c_value')}</th></tr></thead><tbody>
+      ${near.map(({p,b})=>`<tr class="cl" data-act="prod" data-id="${p.code}"><td><div class="nm">${pn(p)}</div><div class="sub">${t('cat_'+p.cat)}</div></td><td><span class="code">${b.id}</span></td><td>${fD(b.exp)}</td><td><div class="row"><div class="mbar" style="width:80px"><i style="width:${Math.max(4,100-b.dte/180*100)}%;background:${dteColor(b.dte)}"></i></div><b style="color:${dteColor(b.dte)};font-size:12.5px">${daysTxt(b.dte)}</b></div></td><td class="num">${fN(b.qty)}</td><td class="num"><b>${money(b.value)}</b></td></tr>`).join('')}</tbody></table></div></div>
+    <div class="card"><div class="ch"><div><h3>${t('tbl_alerts')}</h3><p>${t('al_from',fML(D.R.date))}</p></div><button class="btn sm" data-act="mod" data-m="alerts">${t('f_all')} ${icon('arrowR','flip')}</button></div>${D.alerts.slice(0,5).map(alertRow).join('')}</div>
+  </div></div>`;
+}
+function insights(){
+  const D=data(),A=D.A,P=prevD().A,out=[];
+  const nc=CATS.map(([k])=>k).sort((a,b)=>A.nearCat[b]-A.nearCat[a])[0];
+  out.push(['clock','t-warn',t('ins_near',money(A.near),fN(A.near/A.total*100,1),t('cat_'+nc))]);
+  const low=D.products.filter(p=>p.status==='low'||p.status==='out');
+  out.push(['activity','t-danger',t('ins_low',low.length,low.slice(0,2).map(p=>`<b>${pn(p)}</b>`).join(t('and')))]);
+  const d=pct(A.total,P.total);out.push(['up','t-ok',d>=0?t('ins_up',fN(d,1)):t('ins_down',fN(-d,1))]);
+  if(A.quarN)out.push(['flask','t-violet',t('ins_quar',A.quarN,money(A.quarV))]);
+  const tc=CATS.map(([k])=>k).sort((a,b)=>A.cat[b]-A.cat[a])[0];out.push(['target','t-blue',t('ins_top',t('cat_'+tc),fN(A.cat[tc]/A.total*100,1))]);
+  return out;
+}
+const SEV={critical:['t-danger','alert'],high:['t-warn','clock'],medium:['t-violet','activity'],info:['t-blue','info']};
+function alertTxt(a){const p=pn(a.p);switch(a.k){
+  case'exp':return[t('a_exp_t',p,a.b.id),t('a_exp_d',fN(a.b.qty),money(a.b.value))];
+  case'soon':return[t('a_soon_t',p,a.b.id,a.b.dte),t('a_soon_d',fN(a.b.qty),money(a.b.value))];
+  case'out':return[t('a_out_t',p),t('a_out_d')];
+  case'low':return[t('a_low_t',p),t('a_low_d',fN(a.p.cover,1))];
+  case'quar':return[t('a_quar_t',p,a.b.id),t('a_quar_d',fN(a.b.qty))];
+  case'over':return[t('a_over_t',p),t('a_over_d',fN(a.p.cover,1))]}}
+function alertRow(a,full){const[tt,dd]=alertTxt(a),[tc,ic]=SEV[a.sev];
+  return`<div class="al"><div class="al-ic ${tc}">${icon(ic)}</div><div class="al-b"><div class="al-t">${tt}</div><div class="al-d">${dd}</div>${full?`<div class="row" style="margin-top:8px"><span class="pill ${tc}">${t('sev_'+a.sev)}</span><span class="faint" style="font-size:11.5px">${t('al_from',fML(data().R.date))}</span></div>`:''}</div>${full?`<button class="btn sm" data-act="prod" data-id="${a.p.code}">${t('al_view')}</button>`:`<button class="ibtn" style="width:30px;height:30px" data-act="prod" data-id="${a.p.code}">${icon('chevR','flip')}</button>`}</div>`}
+
+/* ---------- INVENTORY ---------- */
+function vInventory(){const f=S.inv;
+  const sel=(id,all,opts,val)=>`<select class="inp" id="${id}"><option value="all">${t(all)}</option>${opts.map(([v,l])=>`<option value="${v}" ${val===v?'selected':''}>${l}</option>`).join('')}</select>`;
+  return`<div class="page">${pageHead('inventory',t('inv_s'),srcBadge()+`<button class="btn pri" data-act="exportInv">${icon('download')}${t('export_xl')}</button>`)}
+  <div class="card"><div class="filters"><div class="inp-s">${icon('search')}<input class="inp" id="f-q" value="${esc(f.q)}" placeholder="${t('f_search')}"></div>
+  ${sel('f-cat','f_allcat',CATS.map(([k])=>[k,t('cat_'+k)]),f.cat)}${sel('f-wh','f_allwh',['FG','RM','CC','PK'].map(k=>[k,t('wh_'+k)]),f.wh)}${sel('f-type','f_alltype',['FG','RM','PM'].map(k=>[k,t('type_'+k)]),f.type)}${sel('f-st','f_allst',['healthy','low','over','out'].map(k=>[k,t('st_'+k)]),f.st)}
+  <button class="btn" data-act="resetInv">${icon('refresh')}${t('reset')}</button></div><div id="invT"></div></div></div>`}
+function invRows(){const f=S.inv,q=f.q.trim().toLowerCase();
+  let rows=data().products.filter(p=>(f.cat==='all'||p.cat===f.cat)&&(f.wh==='all'||p.wh===f.wh)&&(f.type==='all'||p.type===f.type)&&(f.st==='all'||p.status===f.st)&&(!q||p.code.toLowerCase().includes(q)||p.name.en.toLowerCase().includes(q)||p.name.ar.includes(q)||p.batches.some(b=>b.id.toLowerCase().includes(q))));
+  const key={code:p=>p.code,name:p=>pn(p),cat:p=>t('cat_'+p.cat),wh:p=>t('wh_'+p.wh),batches:p=>p.batches.length,qty:p=>p.qty,cover:p=>p.cover,value:p=>p.value,nexp:p=>p.nexp?p.nexp.dte:99999,status:p=>p.status}[f.sort];
+  rows.sort((a,b)=>{const x=key(a),y=key(b);return(typeof x==='string'?x.localeCompare(y):x-y)*f.dir});return rows}
+function renderInvTable(){const el=$('#invT');if(!el)return;const rows=invRows(),per=12,pages=Math.max(1,Math.ceil(rows.length/per));S.inv.page=Math.min(S.inv.page,pages);
+  const pg=rows.slice((S.inv.page-1)*per,S.inv.page*per),f=S.inv;
+  const th=(k,l,cls='')=>`<th class="s ${cls}" data-act="sort" data-k="${k}">${t(l)} <span class="ar">${f.sort===k?(f.dir>0?'▲':'▼'):'↕'}</span></th>`;
+  el.innerHTML=`<div class="muted" style="font-size:12.5px;margin-bottom:12px">${t('results',rows.length)}</div><div class="tw"><table class="tbl"><thead><tr>${th('code','c_code')}${th('name','c_item')}${th('cat','c_cat')}${th('wh','c_wh')}${th('batches','c_batches','num')}${th('qty','c_qty','num')}${th('cover','c_cover')}${th('value','c_value','num')}${th('nexp','c_nexp')}${th('status','c_status')}</tr></thead><tbody>
+  ${pg.length?pg.map(p=>`<tr class="cl" data-act="prod" data-id="${p.code}"><td><span class="code">${p.code}</span></td><td><div class="nm">${pn(p)}</div><div class="sub">${t('type_'+p.type)}</div></td><td><span class="row" style="gap:7px;font-size:12.5px"><i style="width:8px;height:8px;border-radius:2px;background:${CC[p.cat]};flex:none"></i>${t('cat_'+p.cat)}</span></td><td style="font-size:12.5px">${t('wh_'+p.wh)}</td><td class="num">${p.batches.length}</td><td class="num">${fN(p.qty)} <span class="sub">${uom(p)}</span></td><td><div class="row"><div class="mbar" style="width:60px"><i style="width:${Math.min(100,p.cover/10*100)}%;background:${STC[p.status][0]}"></i></div><span style="font-size:12.5px">${t('mo',fN(p.cover,1))}</span></div></td><td class="num"><b>${money(p.value)}</b></td><td style="font-size:12.5px">${p.nexp?`${fD(p.nexp.exp)}<div class="sub" style="color:${dteColor(p.nexp.dte)}">${daysTxt(p.nexp.dte)}</div>`:'—'}</td><td>${stPill(p.status)}</td></tr>`).join(''):`<tr><td colspan="10"><div class="empty">${icon('search')}<div>${t('no_results')}</div></div></td></tr>`}
+  </tbody></table><div class="pager"><span>${t('page_x',S.inv.page,pages)}</span><div class="row"><button class="btn sm" data-act="page" data-p="${S.inv.page-1}" ${S.inv.page<=1?'disabled':''}>${icon('chevL','flip')}${t('prev')}</button><button class="btn sm" data-act="page" data-p="${S.inv.page+1}" ${S.inv.page>=pages?'disabled':''}>${t('next')}${icon('chevR','flip')}</button></div></div></div>`}
+/* ---------- TRACKING ---------- */
+function vTracking(){
+  const D=data(),p=D.products.find(x=>x.code===S.prod)||D.products[0];S.prod=p.code;
+  const hl=[...Array(6)].map((_,i)=>fM(new Date(D.R.date.getFullYear(),D.R.date.getMonth()-5+i,1)));
+  return`<div class="page">${pageHead('tracking',t('trk_s'),srcBadge())}
+  <div class="grid" style="grid-template-columns:minmax(260px,320px) minmax(0,1fr)">
+   <div class="card"><div class="inp-s" style="margin-bottom:12px">${icon('search')}<input class="inp" id="trk-q" value="${esc(S.prodQ)}" placeholder="${t('trk_find')}"></div><div class="plist" id="plist">${plist()}</div></div>
+   <div style="min-width:0">
+    <div class="card" style="margin-bottom:18px"><div class="ph-card"><div class="ph-ic">${icon(p.type==='FG'?'pill':p.type==='RM'?'flask':'box')}</div><div style="flex:1;min-width:200px"><span class="code">${p.code}</span><h2 style="font-size:21px;margin:2px 0 8px">${pn(p)}</h2><div class="row" style="flex-wrap:wrap;gap:8px"><span class="pill nodot t-muted">${t('cat_'+p.cat)}</span><span class="pill nodot t-muted">${t('type_'+p.type)}</span><span class="pill nodot t-muted">${icon(p.wh==='CC'?'thermo':'building')} ${t('wh_'+p.wh)}</span>${stPill(p.status)}</div></div></div>
+     <div class="mini"><div><small>${t('on_hand')}</small><b class="tnum">${fN(p.qty)}</b> <span class="sub">${uom(p)}</span></div><div><small>${t('inv_value')}</small><b>${money(p.value)}</b></div><div><small>${t('stock_cover')}</small><b style="color:${STC[p.status][0]}">${t('mo',fN(p.cover,1))}</b></div><div><small>${t('monthly_use')}</small><b>${fN(p.usage)}</b></div><div><small>${t('nearest_exp')}</small><b style="color:${p.nexp?dteColor(p.nexp.dte):'inherit'}">${p.nexp?daysTxt(p.nexp.dte):'—'}</b></div></div></div>
+    <div>
+     <div class="card"><div class="ch"><div><h3>${t('stock_hist')}</h3><p>${t('stock_hist_s')}</p></div></div>${lineChart({labels:hl,series:[{name:t('on_hand_s'),vals:p.hist,color:'#2F6BFF',area:1}],refs:[{v:p.usage,label:t('min_level'),color:'#F04438'}],fmt:v=>fN(v>=1e3?v/1e3:v,0)+(v>=1e3?'K':''),h:230,w:1000,pl:56})}</div><div class="mt"></div>
+     <div class="card"><div class="ch"><div><h3>${t('batches_list')}</h3><p>${t('batches_list_s')}</p></div><span class="pill nodot t-blue">${t('n_batches',p.batches.length)}</span></div>
+      ${p.batches.length?`<div class="tw"><table class="tbl"><thead><tr><th>${t('c_batch')}</th><th>${t('c_mfg')}</th><th>${t('c_exp')}</th><th>${t('c_life')}</th><th class="num">${t('c_qty')}</th><th>${t('c_status')}</th><th></th></tr></thead><tbody>${p.batches.map(b=>batchRow(p,b)).join('')}</tbody></table></div>`:`<div class="empty">${icon('alert')}<div style="margin-top:8px;color:var(--danger);font-weight:600">${t('no_batches')}</div></div>`}
+     </div></div>
+   </div></div></div>`}
+function plist(){const q=S.prodQ.trim().toLowerCase();return data().products.filter(p=>!q||p.code.toLowerCase().includes(q)||p.name.en.toLowerCase().includes(q)||p.name.ar.includes(q)).map(p=>`<button class="pli ${p.code===S.prod?'on':''}" data-act="prod" data-id="${p.code}"><span class="sd" style="background:${STC[p.status][0]}"></span><span style="min-width:0"><b>${pn(p)}</b><span class="code" style="font-size:11px">${p.code}</span></span></button>`).join('')}
+function batchRow(p,b){const D=data(),life=(D.R.date-b.mfg)/(b.exp-b.mfg)*100,open=S.openB===b.id;
+  const qc=new Date(b.mfg.getTime()+12*DAY),stp=[
+    ['tr_mfg',fD(b.mfg),'done','cog'],
+    b.st==='quar'?['tr_qcp','—','warn','flask']:['tr_qc',fD(qc),'done','check'],
+    ['tr_store',t('wh_'+b.loc),b.st==='quar'||b.st==='blocked'?'warn':'done','building'],
+    ['tr_rep',fML(D.R.date),'done','file'],
+    ['tr_exp',fD(b.exp),b.dte<0?'bad':'','clock']];
+  return`<tr class="cl" data-act="batch" data-id="${b.id}"><td><span class="code" style="color:var(--text);font-weight:600">${b.id}</span></td><td style="font-size:12.5px;white-space:nowrap">${fD(b.mfg)}</td><td style="font-size:12.5px;white-space:nowrap">${fD(b.exp)}</td><td><div class="mbar" style="width:110px"><i style="width:${Math.min(100,life)}%;background:${dteColor(b.dte)}"></i></div><div class="sub" style="margin-top:4px;color:${dteColor(b.dte)}">${daysTxt(b.dte)}</div></td><td class="num">${fN(b.qty)}<div class="sub">${money(b.value)}</div></td><td>${bsPill(b.st)}</td><td>${icon(open?'chevD':'chevR','flip')}</td></tr>
+  ${open?`<tr class="xrow"><td colspan="7"><b style="font-size:12.5px">${t('trace')||''}</b><div class="trace">${stp.map(([l,v,c,ic])=>`<div class="tr-s ${c}"><div class="tr-d">${icon(ic)}</div><b>${t(l)}</b><small>${v}</small></div>`).join('')}</div><div class="sub" style="text-align:center">${fN(Math.min(100,life),0)}% ${t('shelf_used')}</div></td></tr>`:''}`}
+L.trace=['Batch traceability','تتبع التشغيلة'];
+
+/* ---------- EXPIRY ---------- */
+function vExpiry(){const D=data(),A=D.A,rd=D.R.date;
+  const k4=[['bk_exp',A.bk.exp,A.bkN.exp,'t-danger','alert'],['bk_b90',A.bk.b90,A.bkN.b90,'t-warn','clock'],['bk_b180',A.bk.b180,A.bkN.b180,'t-warn','clock'],['bk_b365',A.bk.b365,A.bkN.b365,'t-blue','cal']];
+  const months=[...Array(12)].map((_,i)=>new Date(rd.getFullYear(),rd.getMonth()+1+i,1));
+  const hmx=Math.max(...CATS.flatMap(([k])=>A.heat[k]))||1;
+  const hcol=v=>{if(!v)return'';const x=v/hmx;return x<.33?`rgba(247,200,115,${.45+x})`:x<.66?`rgba(245,158,11,${.6+x/3})`:`rgba(240,68,56,${.6+x/3})`};
+  const all=D.products.flatMap(p=>p.batches.filter(b=>b.dte<=180).map(b=>({p,b}))).sort((a,b)=>a.b.dte-b.b.dte);
+  const fl=S.riskF==='all'?all:all.filter(x=>bucket(x.b.dte)===S.riskF);
+  const act=(p,b)=>b.dte<0?['act_destroy','t-danger','trash']:p.type!=='FG'?['act_use','t-blue','cog']:b.dte<=90?['act_priority','t-warn','truck']:['act_sales','t-violet','users'];
+  return`<div class="page">${pageHead('expiry',t('exp_s'),srcBadge()+`<button class="btn" data-act="rpExp" data-r="r2">${icon('download')}${t('export_xl')}</button>`)}
+  <div class="grid g-4">${k4.map(([k,v,n,tc,ic])=>`<div class="card kpi"><div class="kpi-top"><div class="kpi-ic ${tc}">${icon(ic)}</div><div class="kpi-l">${t(k)}</div></div><div class="kpi-v">${money(v)}</div><div class="kpi-f"><span>${t('n_batches',n)}</span>·<span>${fN(v/A.total*100,1)}% ${t('of_total')}</span></div></div>`).join('')}</div>
+  <div class="grid g-12">
+   <div class="card"><div class="ch"><div><h3>${t('ch_expiry')}</h3><p>${t('ch_expiry_s')}</p></div></div>${vbars(BK.map(([k,c])=>({label:t('bk_'+k),value:A.bk[k],color:c,sub:t('n_batches',A.bkN[k])})))}</div>
+   <div class="card"><div class="ch"><div><h3>${t('heat_t')}</h3><p>${t('heat_s')}</p></div></div>
+    <div class="heat" style="grid-template-columns:minmax(120px,190px) repeat(12,minmax(0,1fr))"><div></div>${months.map(m=>`<div class="hh">${fM(m)}</div>`).join('')}
+    ${CATS.map(([k])=>`<div class="hl" title="${esc(t('cat_'+k))}">${t('cat_'+k)}</div>`+A.heat[k].map((v,i)=>`<div class="hc" style="background:${hcol(v)||''}" data-tip="${esc(`<b>${t('cat_'+k)}</b><div>${fML(months[i])}: <b>${v?money(v):'—'}</b></div>`)}"></div>`).join('')).join('')}</div>
+    <div class="scale"><span>${t('lowv')}</span><i></i><span>${t('highv')}</span></div></div>
+  </div>
+  <div class="card"><div class="ch"><div><h3>${t('risk_tbl')}</h3><p>${t('risk_tbl_s')}</p></div><div class="chips">${[['all','f_all',all.length],['exp','bk_exp',A.bkN.exp],['b90','bk_b90',A.bkN.b90],['b180','bk_b180',A.bkN.b180]].map(([k,l,n])=>`<button class="chip ${S.riskF===k?'on':''}" data-act="riskF" data-f="${k}">${t(l)} <span class="n">${n}</span></button>`).join('')}</div></div>
+   <div class="tw"><table class="tbl"><thead><tr><th>${t('c_product')}</th><th>${t('c_batch')}</th><th>${t('c_loc')}</th><th>${t('c_exp')}</th><th>${t('c_life')}</th><th class="num">${t('c_qty')}</th><th class="num">${t('c_value')}</th><th>${t('c_action')}</th></tr></thead><tbody>
+   ${fl.map(({p,b})=>{const[a,tc,ic]=act(p,b);return`<tr class="cl" data-act="prod" data-id="${p.code}"><td><div class="nm">${pn(p)}</div><div class="sub">${t('cat_'+p.cat)}</div></td><td><span class="code">${b.id}</span></td><td style="font-size:12.5px">${t('wh_'+b.loc)}</td><td style="font-size:12.5px">${fD(b.exp)}</td><td><b style="color:${dteColor(b.dte)};font-size:12.5px">${daysTxt(b.dte)}</b></td><td class="num">${fN(b.qty)}</td><td class="num"><b>${money(b.value)}</b></td><td><span class="pill nodot ${tc}">${icon(ic)} ${t(a)}</span></td></tr>`}).join('')}
+   </tbody></table></div></div></div>`}
+
+/* ---------- ANALYTICS ---------- */
+function vAnalytics(){const D=data(),A=D.A;
+  const whs=WHS.map(([k,c])=>({label:t('wh_'+k),value:A.wh[k],color:c})).sort((a,b)=>b.value-a.value);
+  const cov=CATS.map(([k,c])=>{const ps=D.products.filter(p=>p.cat===k);return{label:t('cat_'+k).split(' (')[0],value:ps.reduce((a,p)=>a+p.cover,0)/ps.length,color:c}});
+  const sorted=[...D.products].sort((a,b)=>b.value-a.value);let cum=0;const abc={A:[0,0],B:[0,0],C:[0,0]};
+  sorted.forEach(p=>{cum+=p.value;const c=cum/A.total<=.8||abc.A[0]===0?'A':cum/A.total<=.95?'B':'C';abc[c][0]++;abc[c][1]+=p.value});
+  const abcI=[['A','#2F6BFF'],['B','#0FB5AE'],['C','#94A3B8']].map(([k,c])=>({label:t('abc_'+k),value:abc[k][1],color:c,fmt:`${money(abc[k][1])} · ${t('n_items',abc[k][0])}`}));
+  return`<div class="page">${pageHead('analytics',t('an_s'),srcBadge())}
+  <div class="grid g-2">
+   <div class="card"><div class="ch"><div><h3>${t('ch_mom')}</h3><p>${t('ch_mom_s')}</p></div><div class="legend"><span><i style="background:#2F6BFF"></i>${t('total_value')}</span><span><i style="background:#F04438"></i>${t('near_value')}</span></div></div>${lineChart({labels:D.labels.map(fM),series:[{name:t('total_value'),vals:D.trend,color:'#2F6BFF',area:1},{name:t('near_value'),vals:D.ntrend,color:'#F04438',dash:1}],fmt:money,h:260})}</div>
+   <div class="card"><div class="ch"><div><h3>${t('ch_wh')}</h3><p>${t('ch_wh_s')}</p></div></div>${hbars(whs)}<div class="mt"></div>${donut(whs.map(w=>({...w,fmt:fN(w.value/A.total*100,1)+'%'})),money(A.total).replace(/^SAR /,''),t('total_value'),150)}</div>
+  </div>
+  <div class="grid g-2">
+   <div class="card"><div class="ch"><div><h3>${t('ch_cover')}</h3><p>${t('ch_cover_s')}</p></div><span class="pill nodot t-ok">${t('target_band')}</span></div>${vbars(cov,{fmt:v=>t('mo',fN(v,1)),band:[2,6,t('target_band')]})}</div>
+   <div class="card"><div class="ch"><div><h3>${t('ch_abc')}</h3><p>${t('ch_abc_s')}</p></div></div>${donut(abcI,t('n_items',D.products.length),'ABC')}</div>
+  </div>
+  <div class="card"><div class="ch"><div><h3>${t('ch_top')}</h3></div></div><div class="tw"><table class="tbl"><thead><tr><th>#</th><th>${t('c_item')}</th><th>${t('c_cat')}</th><th class="num">${t('c_qty')}</th><th class="num">${t('c_value')}</th><th>${t('c_share')}</th><th>${t('c_status')}</th></tr></thead><tbody>
+  ${sorted.slice(0,10).map((p,i)=>`<tr class="cl" data-act="prod" data-id="${p.code}"><td><b>${i+1}</b></td><td><div class="nm">${pn(p)}</div><span class="code">${p.code}</span></td><td style="font-size:12.5px">${t('cat_'+p.cat)}</td><td class="num">${fN(p.qty)} <span class="sub">${uom(p)}</span></td><td class="num"><b>${money(p.value)}</b></td><td><div class="row"><div class="mbar" style="width:90px"><i style="width:${p.value/sorted[0].value*100}%;background:var(--grad)"></i></div><span style="font-size:12px">${fN(p.value/A.total*100,1)}%</span></div></td><td>${stPill(p.status)}</td></tr>`).join('')}</tbody></table></div></div></div>`}
+
+/* ---------- ALERTS ---------- */
+function vAlerts(){const D=data(),c={critical:0,high:0,medium:0,info:0};D.alerts.forEach(a=>c[a.sev]++);
+  const fl=S.alertF==='all'?D.alerts:D.alerts.filter(a=>a.sev===S.alertF);
+  return`<div class="page">${pageHead('alerts',t('al_s'),`<button class="btn" data-act="markRead">${icon('check')}${t('mark_read')}</button>`)}
+  <div class="grid g-4">${Object.keys(c).map(s=>`<button class="card kpi" style="text-align:start;${S.alertF===s?'border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-bg)':''}" data-act="alertF" data-f="${S.alertF===s?'all':s}"><div class="kpi-top"><div class="kpi-ic ${SEV[s][0]}">${icon(SEV[s][1])}</div><div class="kpi-l">${t('sev_'+s)}</div></div><div class="kpi-v">${c[s]}</div></button>`).join('')}</div>
+  <div class="card"><div class="ch"><div class="chips">${['all','critical','high','medium','info'].map(s=>`<button class="chip ${S.alertF===s?'on':''}" data-act="alertF" data-f="${s}">${t(s==='all'?'f_all':'sev_'+s)} <span class="n">${s==='all'?D.alerts.length:c[s]}</span></button>`).join('')}</div></div>${fl.map(a=>alertRow(a,1)).join('')}</div></div>`}
+/* ---------- UPLOAD ---------- */
+if(!S.hist)S.hist=REPORTS.slice(0,4).map((r,i)=>({file:`SC_Inventory_Report_${MON.en[r.date.getMonth()]}${r.date.getFullYear()}.xlsx`,date:r.date,up:r.up,rec:1248-i*13,q:[97.8,98.4,96.9,97.2][i]}));
+function vUpload(){const u=S.up,steps=['step_upload','step_validate','step_map','step_load'];
+  const cols=['c_code','c_item','c_batch','c_mfg','c_exp','c_qty','c_uom','c_wh','c_cost','c_bstatus'];
+  let body;
+  if(u.stage==='idle')body=`<div class="drop" id="drop" data-act="pick"><div class="big">${icon('upload')}</div><h3 style="font-size:17px">${t('drop_t')}</h3><p class="muted" style="margin-top:6px">${t('drop_s')}</p><button class="btn pri" style="margin-top:18px" data-act="demoUp">${icon('file')}${t('demo_file')}</button></div>`;
+  else{const done=u.stage!=='proc';
+    body=`<div class="row" style="margin-bottom:14px"><div class="kpi-ic t-ok">${icon('file')}</div><div><b>${esc(u.file)}</b><div class="sub">${done?t('up_done'):t('up_progress')}</div></div></div>
+    <div class="steps">${steps.map((s,i)=>`<div class="step ${i<u.step||done?'done':i===u.step?'act':''}"><span class="n">${i<u.step||done?icon('check'):i+1}</span>${t(s)}</div>`).join('')}</div>
+    <div class="prog"><i style="width:${done?100:u.step*25+12}%"></i></div>
+    ${done?`<div class="grid g-4 mt">${[['v_rows','1,248','t-blue'],['v_valid','1,241','t-ok'],['v_warn','7','t-warn'],['v_score','99.4%','t-violet']].map(([k,v,tc])=>`<div class="card" style="padding:14px;box-shadow:none"><div class="kpi-l">${t(k)}</div><div class="kpi-v ${tc}" style="background:none;font-size:22px">${v}</div></div>`).join('')}</div>
+    <div class="ins" style="margin-bottom:16px">${[['check','t-ok','w3'],['alert','t-warn','w1'],['alert','t-warn','w2']].map(([ic,tc,k])=>`<div class="ins-i"><div class="kpi-ic ${tc}">${icon(ic)}</div><div>${t(k)}</div></div>`).join('')}</div>
+    <div class="row">${u.stage==='pub'?`<span class="pill t-ok">${t('published')}</span><span class="sp"></span><button class="btn" data-act="upReset">${icon('refresh')}${t('upload_new')}</button>`:`<button class="btn pri" data-act="upPub">${icon('zap')}${t('publish')}</button><button class="btn" data-act="upReset">${t('reset')}</button>`}</div>`:''}`}
+  return`<div class="page">${pageHead('upload',t('up_s'))}
+  <div class="grid g-21"><div class="card">${body}</div>
+   <div class="card"><div class="ch"><div><h3>${t('tpl_t')}</h3><p>${t('tpl_s')}</p></div></div><div class="cols">${cols.map(c=>`<span>${icon('check')}${t(c)}</span>`).join('')}</div>
+    <div class="ins-i mt" style="background:var(--info-bg);border-color:transparent"><div class="kpi-ic t-blue">${icon('link')}</div><div>${t('future_erp')}</div></div></div></div>
+  <div class="card"><div class="ch"><div><h3>${t('hist_t')}</h3></div></div><div class="tw"><table class="tbl"><thead><tr><th>${t('h_file')}</th><th>${t('h_period')}</th><th>${t('h_by')}</th><th>${t('h_date')}</th><th class="num">${t('h_records')}</th><th>${t('h_quality')}</th><th>${t('c_status')}</th></tr></thead><tbody>
+  ${S.hist.map(h=>`<tr><td><div class="row">${icon('file')}<span class="code" style="color:var(--text)">${esc(h.file)}</span></div></td><td>${fML(h.date)}</td><td style="font-size:12.5px">${t('by_sc')}</td><td>${fD(h.up)}</td><td class="num">${fN(h.rec)}</td><td><div class="row"><div class="mbar" style="width:70px"><i style="width:${h.q}%;background:var(--ok)"></i></div><span style="font-size:12px">${h.q}%</span></div></td><td><span class="pill t-ok">${t('pub_ok')}</span></td></tr>`).join('')}</tbody></table></div></div></div>`}
+function startUpload(name){S.up={stage:'proc',step:0,file:name};render();
+  const tick=()=>{if(S.up.stage!=='proc')return;S.up.step++;if(S.up.step>=4)S.up.stage='done';if(S.mod==='upload')renderContent();if(S.up.stage==='proc')setTimeout(tick,850)};setTimeout(tick,850)}
+
+/* ---------- REPORTS ---------- */
+const RPS=[['r1','grid','t-brand'],['r2','clock','t-warn'],['r3','layers','t-blue'],['r4','activity','t-danger'],['r5','building','t-violet'],['r6','spark','t-ok']];
+function vReports(){const D=data();
+  return`<div class="page">${pageHead('reports',t('rp_s'),srcBadge())}
+  <div class="grid g-3">${RPS.map(([k,ic,tc])=>{const r=rptData(k);return`<div class="card rp"><div class="row"><div class="rp-ic ${tc}">${icon(ic)}</div><span class="sp"></span><span class="pill nodot t-muted">Excel · PDF</span></div><h3>${t(k)}</h3><p>${t(k+'d')}</p><div class="rp-f"><span>${t('based_on')} ${fML(D.R.date)} · ${t('rows_n',r.rows.length)}</span><div class="row" style="gap:6px"><button class="btn sm" data-act="rpPrev" data-r="${k}">${icon('eye')}${t('preview')}</button><button class="btn sm pri" data-act="rpExp" data-r="${k}">${icon('download')}${t('export')}</button></div></div></div>`}).join('')}</div>
+  <div class="card"><div class="ch"><div><h3 class="row">${t('sched_t')} <span class="pill nodot t-violet">${t('soon')}</span></h3><p>${t('sched_s')}</p></div></div>${[1,2,3].map(i=>`<div class="al"><div class="al-ic t-blue">${icon('mail')}</div><div class="al-b"><div class="al-t">${t('sc'+i)}</div><div class="al-d">${t('sc'+i+'w')}</div></div><span class="pill t-muted">${t('st_plan')}</span></div>`).join('')}</div></div>`}
+function rptData(k){const D=data(),P=D.products,H=c=>c.map(x=>t(x));
+  const bAll=P.flatMap(p=>p.batches.map(b=>({p,b})));
+  switch(k){
+  case'r1':case'r6':return{h:H(['c_code','c_item','c_cat','c_wh','c_qty','c_cover','c_value','c_status']),rows:P.map(p=>[p.code,pn(p),t('cat_'+p.cat),t('wh_'+p.wh),fN(p.qty),fN(p.cover,1),Math.round(p.value),t('st_'+p.status)])};
+  case'r2':return{h:H(['c_code','c_item','c_batch','c_exp','c_life','c_qty','c_value','c_loc']),rows:bAll.filter(x=>x.b.dte<=180).sort((a,b)=>a.b.dte-b.b.dte).map(({p,b})=>[p.code,pn(p),b.id,fD(b.exp),daysTxt(b.dte),fN(b.qty),Math.round(b.value),t('wh_'+b.loc)])};
+  case'r3':return{h:H(['c_code','c_item','c_batch','c_mfg','c_exp','c_qty','c_loc','c_bstatus']),rows:bAll.map(({p,b})=>[p.code,pn(p),b.id,fD(b.mfg),fD(b.exp),fN(b.qty),t('wh_'+b.loc),t('bs_'+b.st)])};
+  case'r4':return{h:H(['c_code','c_item','c_qty','monthly_use','c_cover','c_status']),rows:P.filter(p=>p.status==='low'||p.status==='out').map(p=>[p.code,pn(p),fN(p.qty),fN(p.usage),fN(p.cover,1),t('st_'+p.status)])};
+  case'r5':return{h:H(['c_wh','c_batches','c_value','c_share']),rows:WHS.map(([w])=>{const bs=bAll.filter(x=>x.b.loc===w);return[t('wh_'+w),bs.length,Math.round(D.A.wh[w]),fN(D.A.wh[w]/D.A.total*100,1)+'%']})};}}
+function exportCSV(k,name){const r=rptData(k),q=v=>`"${String(v).replace(/"/g,'""')}"`;
+  const csv='﻿'+[r.h,...r.rows].map(row=>row.map(q).join(',')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`PharmaStock_${name.replace(/[^\w]+/g,'_')}_${data().R.date.toISOString().slice(0,7)}.csv`;document.body.appendChild(a);a.click();a.remove();
+  toast(t('exported',t(k)))}
+function previewReport(k){const D=data(),A=D.A,r=rptData(k);
+  const kp=[[t('kpi_value'),money(A.total)],[t('kpi_skus'),fN(A.skus)],[t('kpi_near'),money(A.near)],[t('kpi_expired'),money(A.bk.exp)]];
+  openModal(`<div class="mdl-h"><b>${t(k)}</b><div class="row"><button class="btn sm" data-act="print">${icon('file')}${t('print')}</button><button class="btn sm pri" data-act="rpExp" data-r="${k}">${icon('download')}Excel</button><button class="ibtn" data-act="closeModal">${icon('x')}</button></div></div>
+  <div class="rp-doc"><div class="hd"><div class="row"><div class="logo-mark">${LOGO}</div><div><div class="logo-name">PharmaStock <span>Intelligence</span></div><div class="logo-sub">${t('brand_sub')}</div></div></div><div style="text-align:end"><h2 style="font-size:20px">${t(k)}</h2><div class="sub">${t('period_l')}: <b>${fML(D.R.date)}</b> · ${t('generated_on')}: ${fD(new Date(2026,10,10))}</div></div></div>
+  <div class="grid g-4">${kp.map(([l,v])=>`<div style="padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border)"><div class="kpi-l">${l}</div><b style="font-size:18px">${v}</b></div>`).join('')}</div>
+  ${k==='r6'?`<div class="ins" style="margin-bottom:18px">${insights().map(([ic,tc,x])=>`<div class="ins-i"><div class="kpi-ic ${tc}">${icon(ic)}</div><div>${x}</div></div>`).join('')}</div>`:''}
+  <table class="tbl" style="border:1px solid var(--border);border-radius:10px"><thead><tr>${r.h.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${r.rows.slice(0,k==='r6'?8:14).map(row=>`<tr>${row.map(c=>`<td style="font-size:12px">${typeof c==='number'?money(c):c}</td>`).join('')}</tr>`).join('')}</tbody></table>
+  <div class="row mt" style="justify-content:space-between;font-size:11.5px;color:var(--faint)"><span>${t('confidential')}</span><span>${t('rows_n',r.rows.length)}</span></div></div>`)}
+
+/* ---------- ACCESS ---------- */
+const PERMS=['dash','inv','batch','cost','export','upload','admin'];
+if(!S.perms)S.perms={exec:[1,1,1,1,1,0,0,8],sc:[1,1,1,1,1,1,0,14],prod:[1,1,1,0,1,0,0,22],qa:[1,1,1,0,1,0,0,12],sales:[1,1,1,0,1,0,0,18],fin:[1,1,0,1,1,0,0,6],reg:[1,1,1,0,1,0,0,4],it:[1,1,1,1,1,1,1,3]};
+const DEPIC={exec:'target',sc:'truck',prod:'cog',qa:'flask',sales:'users',fin:'wallet',reg:'shield',it:'db'};
+function vAccess(){return`<div class="page">${pageHead('access',t('ac_s'))}
+  <div class="card" style="margin-bottom:18px"><div class="tw" style="margin:-20px;border:0"><table class="tbl"><thead><tr><th>${t('c_dept')}</th><th class="num">${t('c_users')}</th>${PERMS.map(p=>`<th style="text-align:center">${t('perm_'+p)}</th>`).join('')}</tr></thead><tbody>
+  ${Object.entries(S.perms).map(([d,v])=>`<tr><td><div class="row"><div class="kpi-ic t-blue" style="width:32px;height:32px">${icon(DEPIC[d])}</div><b>${t('dep_'+d)}</b></div></td><td class="num">${v[7]}</td>${PERMS.map((p,i)=>`<td style="text-align:center"><button class="pm ${v[i]?'y':'n'}" data-act="perm" data-d="${d}" data-i="${i}">${icon(v[i]?'check':'lock')}</button></td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+  <div class="grid g-2"><div class="card"><div class="ch"><h3>${t('gov_t')}</h3></div>${[['lock','gov1'],['eye','gov2'],['users','gov3'],['shield','gov4']].map(([ic,k])=>`<div class="al"><div class="al-ic t-ok">${icon(ic)}</div><div class="al-b"><div class="al-t">${t(k)}</div></div>${icon('check')}</div>`).join('')}</div>
+  <div class="card"><div class="ch"><h3>${t('log_t')}</h3></div>${[['upload','lg1','lgt1','t-brand'],['download','lg2','lgt2','t-blue'],['eye','lg3','lgt3','t-violet'],['shield','lg4','lgt4','t-ok']].map(([ic,k,tm,tc])=>`<div class="al"><div class="al-ic ${tc}">${icon(ic)}</div><div class="al-b"><div class="al-t">${t(k)}</div><div class="al-d">${t(tm)}</div></div></div>`).join('')}</div></div></div>`}
+
+/* ---------- ROADMAP ---------- */
+const PH=[['ph1','t-brand','#0FB5AE'],['ph2','t-blue','#2F6BFF'],['ph3','t-violet','#7C5CFF'],['ph4','t-warn','#F59E0B']];
+function vRoadmap(){return`<div class="page">${pageHead('roadmap',t('rm_s'))}<div class="rm">${PH.map(([k,tc],i)=>`<div class="card rm-c ${i?'':'cur'}"><div class="row"><div class="rm-n ${tc}">${i+1}</div><span class="sp"></span><span class="pill ${i?'t-muted':'t-ok'}">${t(i?'st_plan':'st_now')}</span></div><div class="sub" style="font-weight:600">${t(k+'w')}</div><h3 style="font-size:19px;margin-top:2px">${t(k)}</h3><ul>${L[k+'i'][LI()].map(x=>`<li>${icon(i?'chevR':'check','flip')}${x}</li>`).join('')}</ul></div>`).join('')}</div></div>`}
+
+/* ---------- modal / toast ---------- */
+function openModal(h){const m=$('#modal');m.innerHTML=`<div class="mdl">${h}</div>`;m.classList.add('open')}
+function closeModal(){$('#modal').classList.remove('open')}
+function toast(msg){const el=document.createElement('div');el.className='toast';el.innerHTML=icon('check')+`<span>${msg}</span>`;$('#toasts').appendChild(el);setTimeout(()=>{el.style.transition='.3s';el.style.opacity='0'},2800);setTimeout(()=>el.remove(),3200)}
+/* ================= PRESENTATION DECK ================= */
+const rv=d=>`data-rv="${d}"`;
+const head=(k,ti,sub)=>`<div ${rv(0)}><div class="kick">${t(k)}</div></div><h2 class="s-h" ${rv(1)}>${t(ti)}</h2>${sub?`<p class="s-p" ${rv(2)}>${t(sub)}</p>`:''}`;
+function slides(){const D=DS[0],A=D.A;
+return[
+/* 1 cover */
+`<div class="cover"><div>
+  <div ${rv(0)}><span class="kick">${t('s1_k')}</span></div>
+  <h1 ${rv(1)}>PharmaStock<br><span class="gt">Intelligence</span></h1>
+  <div class="arname" ${rv(2)}>${t('s1_ar')}</div>
+  <div class="tag" ${rv(3)}>${t('tagline')}</div>
+  <div class="row" style="gap:16px;margin-top:40px" ${rv(4)}><button class="sbtn p" data-act="next">${t('s1_start')}${icon('arrowR','flip')}</button><button class="sbtn g" data-act="view" data-v="app">${icon('play','flip')}${t('s1_demo')}</button></div>
+  <div class="meta" ${rv(5)}>${icon('building')}${t('s1_meta')}</div></div>
+ <div style="position:relative" ${rv(3)}><div class="orb" style="width:620px;height:620px;top:-90px;inset-inline-start:-40px"></div><div class="orb" style="width:440px;height:440px;top:0;inset-inline-start:50px"></div>
+  <div class="glass mock float"><div class="row" style="margin-bottom:18px"><div class="logo-mark" style="width:32px;height:32px">${LOGO}</div><b style="color:#fff;font-size:16px">${t('m_dashboard')}</b><span class="sp"></span><span class="row" style="font-size:13px;color:#8EA2C0"><span class="live"></span>${fML(D.R.date)}</span></div>
+   <div class="mock-k"><div><small>${t('kpi_value')}</small><b>${money(A.total)}</b></div><div><small>${t('kpi_near')}</small><b style="color:#FBBF24">${money(A.near)}</b></div><div><small>${t('kpi_batches')}</small><b>${fN(A.batches)}</b></div></div>
+   <div style="margin:18px -6px 4px">${lineChart({labels:D.labels.map(fM),series:[{name:t('total_value'),vals:D.trend,color:'#2DD4BF',area:1}],fmt:money,h:190,w:640,pl:76})}</div>
+   ${D.alerts.slice(0,2).map(a=>`<div class="mock-a"><span style="color:${a.sev==='critical'?'#F87171':'#FBBF24'}">${icon('alert')}</span>${alertTxt(a)[0]}</div>`).join('')}</div></div></div>`,
+/* 2 challenge */
+`${head('s2_k','s2_t','s2_s')}<div style="display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;margin-top:40px">
+ <div class="glass" style="padding:26px" ${rv(3)}><div class="flow">${[1,2,3,4].map(i=>`${i>1?'<div class="fl-ar"></div>':''}<div class="fl"><span class="fl-n">${i}</span>${t('s2_f'+i)}</div>`).join('')}</div>
+  <div class="row" style="margin-top:18px;padding:14px 18px;border-radius:14px;background:rgba(240,68,56,.12);border:1px solid rgba(240,68,56,.3);color:#FFB4AB;font-size:17px;font-weight:600">${icon('clock')}${t('s2_lag')}</div></div>
+ <div class="pain">${[1,2,3,4,5,6].map(i=>`<div class="glass" ${rv(3+i*.6)}><div class="s-ic red-ic">${icon(['clock','layers','users','alert','lock','eye'][i-1])}</div><div><h4>${t(`s2_p${i}t`)}</h4><p>${t(`s2_p${i}d`)}</p></div></div>`).join('')}</div></div>`,
+/* 3 solution */
+`${head('s3_k','s3_t','s3_s')}<div class="arch">${[['file','a1'],['shield','a2'],['db','a3'],['spark','a4'],['users','a5']].map(([ic,k],i)=>`${i?`<div class="ac" ${rv(3+i)}><div class="ac-line"></div></div>`:''}<div class="glass an" ${rv(3+i)}><div class="s-ic">${icon(ic)}</div><h4>${t(k)}</h4><p>${t(k+'d')}</p></div>`).join('')}</div>
+ <div class="ba">${[1,2,3,4].map(i=>`<div class="glass" ${rv(8+i*.5)}><s>${t(`b${i}o`)}</s><b>${icon('arrowR','flip')}${t(`b${i}n`)}</b></div>`).join('')}</div>`,
+/* 4 capabilities */
+`${head('s4_k','s4_t')}<div class="caps">${[['grid',1],['search',2],['layers',3],['clock',4],['bell',5],['file',6],['shield',7],['lang',8]].map(([ic,i])=>`<div class="glass" ${rv(2+i*.5)}><div class="s-ic">${icon(ic)}</div><h4>${t('cap'+i)}</h4><p>${t('cap'+i+'d')}</p></div>`).join('')}</div>`,
+/* 5 demo */
+`<div class="demo"><div>${head('s5_k','s5_t','s5_s')}<button class="sbtn p" style="margin-top:36px" data-act="view" data-v="app" ${rv(3)}>${icon('play','flip')}${t('s5_btn')}</button><div class="note" ${rv(4)}>${icon('info')}${t('demo_note')}</div></div>
+ <div class="mods">${NAV.flatMap(g=>g[1]).map(([m,ic],i)=>`<button data-act="openMod" data-m="${m}" ${rv(2+i*.35)}><span class="s-ic">${icon(ic)}</span>${t('m_'+m)}${icon('chevR','flip')}</button>`).join('')}</div></div>`,
+/* 6 departments */
+`${head('s6_k','s6_t')}<div class="deps">${['exec','sc','prod','qa','sales','fin','reg','it'].map((d,i)=>`<div class="glass" ${rv(2+i*.45)}><div class="s-ic">${icon(DEPIC[d])}</div><h4>${t('dep_'+d)}</h4><p>${t('dv_'+d)}</p></div>`).join('')}</div>`,
+/* 7 impact */
+`${head('s7_k','s7_t')}<div class="stats">${[['1','v1'],['≈70%','v2'],['180','v3'],['100%','v4'],['7','v5'],[t('v6n'),'v6']].map(([n,k],i)=>`<div class="glass" ${rv(2+i*.6)}><b class="gt">${n}</b><p>${t(k)}</p></div>`).join('')}</div><div class="note" ${rv(7)}>${icon('info')}${t('s7_note')}</div>`,
+/* 8 roadmap */
+`${head('s8_k','s8_t')}<div class="srm">${PH.map(([k,tc,c],i)=>`<div class="srm-c ${i?'':'cur'}" ${rv(2+i)}><div class="srm-d" style="${i?`border-color:${c}`:''}">${i+1}</div><div class="glass"><div class="when">${t(k+'w')}</div><h4>${t(k)}</h4><span class="tagc" style="background:${i?'rgba(255,255,255,.07)':'rgba(15,181,174,.2)'};color:${i?'#9FB2CE':'#4FE0D6'}">${t(i?'st_plan':'st_now')}</span><ul>${L[k+'i'][LI()].slice(0,4).map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`).join('')}</div>`,
+/* 9 implementation */
+`${head('s9_k','s9_t')}<div style="display:grid;grid-template-columns:1.5fr 1fr;gap:30px;margin-top:40px">
+ <div class="glass gantt" ${rv(2)}><div class="gt-row" style="height:34px"><div class="gt-h" style="text-align:start">${t('weeks_lbl')}</div><div class="gt-t">${[...Array(12)].map((_,i)=>`<span class="gt-h">${t('wk')}${i+1}</span>`).join('')}</div></div>
+  ${[[1,0,3,'#0FB5AE'],[2,2,8,'#2F6BFF'],[3,5,9,'#7C5CFF'],[4,8,11,'#F59E0B'],[5,10,12,'#12B76A']].map(([i,s,e,c])=>`<div class="gt-row"><div class="gt-l">${t('gt'+i)}</div><div class="gt-t">${[...Array(12)].map(()=>'<span></span>').join('')}<div class="gt-b" style="inset-inline-start:${s/12*100}%;width:${(e-s)/12*100}%;background:${c}">${t('wk')}${s+1}–${e}</div></div></div>`).join('')}</div>
+ <div class="glass" style="padding:26px 30px" ${rv(3)}><h4 style="font-size:21px;color:#fff;margin-bottom:8px">${t('s9_n')}</h4>${[['users','n1'],['shield','n2'],['target','n3'],['activity','n4'],['check','n5']].map(([ic,k])=>`<div class="need"><span class="s-ic" style="width:40px;height:40px">${icon(ic)}</span>${t(k)}</div>`).join('')}</div></div>`,
+/* 10 decision */
+`<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:50px;align-items:center"><div>${head('s10_k','s10_t')}<div class="dec">${[1,2,3,4].map(i=>`<div class="glass" ${rv(2+i*.6)}><span class="n">${i}</span>${t('d'+i)}</div>`).join('')}</div></div>
+ <div class="glass glance" ${rv(4)}><h4 style="font-size:22px;color:#fff;margin-bottom:10px">${t('gl_t')}</h4>${[1,2,3,4,5].map(i=>`<div><span>${t('gl'+i)}</span><b>${t('gl'+i+'v')}</b></div>`).join('')}</div></div>`,
+/* 11 thanks */
+`<div class="thanks" style="display:flex;flex-direction:column;align-items:center"><div class="logo-mark" style="width:92px;height:92px;border-radius:26px" ${rv(0)}>${LOGO.replace('<svg','<svg style="width:52px;height:52px"')}</div><h2 ${rv(1)} style="margin-top:34px"><span class="gt">${t('s11_t')}</span></h2><p class="s-p" ${rv(2)} style="margin-top:12px;font-size:28px">${t('s11_s')}</p><p class="s-p" ${rv(3)} style="font-size:21px;color:#7F93B2;margin-top:34px">PharmaStock Intelligence · ${t('brand_sub')}</p><p class="s-p" ${rv(4)} style="font-size:19px;color:#5F7596;margin-top:6px">${t('tagline')}</p>
+ <div class="row" style="gap:16px;margin-top:40px;justify-content:center" ${rv(5)}><button class="sbtn p" data-act="view" data-v="app">${icon('play','flip')}${t('s1_demo')}</button><button class="sbtn g" data-act="slide" data-n="0">${icon('refresh')}${t('s1_start')}</button></div></div>`,
+]}
+function renderDeck(){const sl=slides();S.slide=Math.min(S.slide,sl.length-1);
+  $('#stage').innerHTML=sl.map((h,i)=>`<section class="slide">${h}</section>`).join('');
+  $('#dots').innerHTML=sl.map((_,i)=>`<button data-act="slide" data-n="${i}" aria-label="${i+1}"></button>`).join('');
+  $('#dprev').innerHTML=icon('chevL','flip');$('#dnext').innerHTML=icon('chevR','flip');$('#dprev').title=t('d_prev');$('#dnext').title=t('d_next');
+  $('#dhint').textContent=t('keys_hint');fitStage();goSlide(S.slide,true)}
+function goSlide(n,inst){const ss=[...document.querySelectorAll('.slide')];n=Math.max(0,Math.min(ss.length-1,n));S.slide=n;
+  ss.forEach((s,i)=>{s.classList.toggle('on',i===n);s.classList.toggle('past',i<n)});
+  document.querySelectorAll('#dots button').forEach((b,i)=>b.classList.toggle('on',i===n));
+  $('#dcount').textContent=`${String(n+1).padStart(2,'0')} / ${String(ss.length).padStart(2,'0')}`;
+  $('#dprog').style.width=`${(n+1)/ss.length*100}%`;$('#dprev').disabled=n===0;$('#dnext').disabled=n===ss.length-1}
+function fitStage(){const d=$('#deck'),st=$('#stage');if(!d||!st)return;const w=d.clientWidth||innerWidth,h=d.clientHeight||innerHeight-64,k=Math.min(w/1600,h/900);st.style.transform=`translate(-50%,-50%) scale(${k})`}
+/* ================= RENDER & EVENTS ================= */
+const VIEWS={dashboard:vDashboard,inventory:vInventory,tracking:vTracking,expiry:vExpiry,analytics:vAnalytics,alerts:vAlerts,upload:vUpload,reports:vReports,access:vAccess,roadmap:vRoadmap};
+function renderContent(){$('#content').innerHTML=VIEWS[S.mod]();if(S.mod==='inventory')renderInvTable()}
+function render(){
+  const h=document.documentElement;h.lang=S.lang;h.dir=LI()?'rtl':'ltr';h.dataset.theme=S.theme;
+  document.body.classList.toggle('deck',S.view==='deck');document.title=`PharmaStock Intelligence · ${t('brand_sub')}`;
+  renderTop();
+  if(S.view==='deck'){renderDeck();document.querySelectorAll('[data-rv]').forEach(e=>e.style.transitionDelay=(+e.dataset.rv*90)+'ms')}
+  else{renderSide();renderContent()}
+  try{localStorage.setItem('ps_pref',JSON.stringify({lang:S.lang,theme:S.theme}))}catch(e){}
+}
+function setMod(m){S.mod=m;S.view='app';closeDD();render();$('#content').scrollTop=0}
+function closeDD(){document.querySelectorAll('.dd.open').forEach(d=>d.classList.remove('open'))}
+function openProd(code){S.prod=code;S.openB=null;S.prodQ='';closeModal();setMod('tracking')}
+
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-act]');
+  if(!e.target.closest('.dd')&&!(a&&a.dataset.act==='bell'))closeDD();
+  if(e.target.id==='modal'){closeModal();return}
+  if(!a||a.disabled)return;const d=a.dataset;
+  switch(d.act){
+    case'view':S.view=d.v;render();break;
+    case'lang':if(S.lang!==d.l){S.lang=d.l;render()}break;
+    case'theme':S.theme=S.theme==='dark'?'light':'dark';render();break;
+    case'fs':document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{});break;
+    case'next':goSlide(S.slide+1);break;case'prev':goSlide(S.slide-1);break;case'slide':goSlide(+d.n);break;
+    case'mod':setMod(d.m);break;case'openMod':setMod(d.m);break;
+    case'prod':e.stopPropagation();openProd(d.id);break;
+    case'batch':S.openB=S.openB===d.id?null:d.id;renderContent();break;
+    case'sort':S.inv.dir=S.inv.sort===d.k?-S.inv.dir:(['code','name','cat','wh','nexp'].includes(d.k)?1:-1);S.inv.sort=d.k;renderInvTable();break;
+    case'page':S.inv.page=+d.p;renderInvTable();break;
+    case'resetInv':S.inv={q:'',cat:'all',wh:'all',type:'all',st:'all',sort:'value',dir:-1,page:1};renderContent();break;
+    case'exportInv':exportCSV('r1',t('m_inventory'));break;
+    case'riskF':S.riskF=d.f;renderContent();break;
+    case'alertF':S.alertF=d.f;renderContent();break;
+    case'markRead':S.read=true;renderTop();renderSide();toast(t('all_read'));break;
+    case'bell':{const dd=$('#belldd');const o=dd.classList.contains('open');closeDD();if(!o){const D=data();dd.innerHTML=`<div class="row" style="padding:8px 10px 10px"><b>${t('notifications')}</b><span class="sp"></span><button class="btn sm" data-act="markRead">${t('mark_read')}</button></div>${D.alerts.slice(0,5).map(x=>{const[tt,ds]=alertTxt(x),[tc,ic]=SEV[x.sev];return`<button class="dd-item" data-act="prod" data-id="${x.p.code}"><div class="al-ic ${tc}" style="width:30px;height:30px">${icon(ic)}</div><div style="min-width:0"><div style="font-size:12.5px;font-weight:600;line-height:1.35">${tt}</div><div class="sub">${ds}</div></div></button>`}).join('')}<button class="btn" style="width:100%;justify-content:center;margin-top:6px" data-act="mod" data-m="alerts">${t('view_all')}</button>`;dd.classList.add('open')}break}
+    case'pick':if(!e.target.closest('[data-act="demoUp"]'))$('#upfile').click();break;
+    case'demoUp':e.stopPropagation();startUpload('SC_Inventory_Report_Oct2026.xlsx');break;
+    case'upPub':S.up.stage='pub';S.hist.unshift({file:S.up.file,date:data().R.date,up:new Date(2026,10,10),rec:1241,q:99.4});renderContent();toast(t('published'));break;
+    case'upReset':S.up={stage:'idle',step:0,file:''};renderContent();break;
+    case'rpPrev':previewReport(d.r);break;
+    case'rpExp':exportCSV(d.r,t(d.r));break;
+    case'print':window.print();break;
+    case'closeModal':closeModal();break;
+    case'perm':{const v=S.perms[d.d];v[+d.i]=v[+d.i]?0:1;renderContent();toast(t('perm_upd'));break}
+  }
+});
+document.addEventListener('input',e=>{const id=e.target.id;
+  if(id==='f-q'){S.inv.q=e.target.value;S.inv.page=1;renderInvTable()}
+  else if(id==='trk-q'){S.prodQ=e.target.value;$('#plist').innerHTML=plist()}
+  else if(id==='gsearch'){const q=e.target.value.trim().toLowerCase(),dd=$('#gsdd');if(!q){dd.classList.remove('open');return}
+    const res=data().products.filter(p=>p.code.toLowerCase().includes(q)||p.name.en.toLowerCase().includes(q)||p.name.ar.includes(q)||p.batches.some(b=>b.id.toLowerCase().includes(q))).slice(0,7);
+    dd.innerHTML=res.length?res.map(p=>`<button class="dd-item" data-act="prod" data-id="${p.code}"><div class="kpi-ic t-brand" style="width:30px;height:30px">${icon(p.type==='FG'?'pill':'box')}</div><div style="min-width:0"><div style="font-size:13px;font-weight:600">${pn(p)}</div><span class="code" style="font-size:11px">${p.code} · ${t('n_batches',p.batches.length)}</span></div><span class="sp"></span>${stPill(p.status)}</button>`).join(''):`<div class="empty" style="padding:16px">${t('no_results')}</div>`;dd.classList.add('open')}
+});
+document.addEventListener('change',e=>{const id=e.target.id,v=e.target.value,m={'f-cat':'cat','f-wh':'wh','f-type':'type','f-st':'st'};
+  if(m[id]){S.inv[m[id]]=v;S.inv.page=1;renderInvTable()}
+  else if(id==='period'){S.period=+v;S.read=false;render();toast(t('period_toast',fML(data().R.date)))}
+  else if(id==='upfile'&&e.target.files[0]){startUpload(e.target.files[0].name);e.target.value=''}
+});
+document.addEventListener('dragover',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d){e.preventDefault();d.classList.add('over')}});
+document.addEventListener('dragleave',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d)d.classList.remove('over')});
+document.addEventListener('drop',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d){e.preventDefault();const f=e.dataTransfer.files[0];startUpload(f?f.name:'SC_Inventory_Report.xlsx')}});
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,select,textarea'))return;
+  if(e.key==='Escape'){closeModal();closeDD();return}
+  if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{});return}
+  if(S.view!=='deck')return;const rtl=LI();
+  if(['PageDown',' '].includes(e.key)||e.key===(rtl?'ArrowLeft':'ArrowRight')){e.preventDefault();goSlide(S.slide+1)}
+  else if(e.key==='PageUp'||e.key===(rtl?'ArrowRight':'ArrowLeft')){e.preventDefault();goSlide(S.slide-1)}
+  else if(e.key==='Home')goSlide(0);else if(e.key==='End')goSlide(99);
+});
+/* tooltip */
+const tip=$('#tip');
+document.addEventListener('mousemove',e=>{const el=e.target.closest&&e.target.closest('[data-tip]');if(!el){tip.classList.remove('on');return}
+  tip.innerHTML=el.dataset.tip;tip.classList.add('on');const r=tip.getBoundingClientRect();let x=e.clientX+14,y=e.clientY+14;if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;tip.style.left=x+'px';tip.style.top=y+'px'});
+addEventListener('resize',fitStage);
+try{const p=JSON.parse(localStorage.getItem('ps_pref')||'{}');if(p.lang)S.lang=p.lang;if(p.theme)S.theme=p.theme}catch(e){}
+render();
+</script>
+</body>
+</html>
